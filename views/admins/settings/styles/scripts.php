@@ -104,7 +104,7 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
 
-<!-- <script>
+<script>
 
     document.addEventListener('contextmenu', e => e.preventDefault());
 
@@ -120,7 +120,7 @@
         e.clipboardData.setData("text/plain", hash);
     });
 
-</script> -->
+</script>
 
 
 </body>

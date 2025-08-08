@@ -27,7 +27,7 @@
                                     <th>Id Kamar</th>
                                     <th>Harga</th>
                                     <th>Status</th>
-                                    <th>Khusus</th>\
+                                    <th>Khusus</th>
                                     <th>Foto</th>
                                     <th style="width: 10%;">Action</th>
                                 </tr>
@@ -55,11 +55,23 @@
                                 ?>
                                     <tr>
                                         <td align="center"><?= $no; ?></td>
-                                        <td><?= $data['kode']; ?></td>
-                                        <td><?= $data['harga']; ?></td>
+                                        <td align="center"><?= $data['kode']; ?></td>
+                                        <td>
+                                            <?php
+                                                $harga = "Rp. " . number_format($data['harga'], 2 , ",", ".");
+                                                echo $harga;
+                                            ?>
+                                        </td>
                                         <td><?= $data['status']; ?></td>
                                         <td><?= $data['khusus']; ?></td>
-                                        <td><?= $data['foto']; ?></td>
+                                        <td align="center">
+                                            <div class="avatar avatar-xxl">
+                                                <img 
+                                                src="/kost/assets/uploads/kamar/<?= $data['foto']; ?>" 
+                                                alt="Foto kamar <?= $data['kode']; ?>"
+                                                class="avatar-img rounded">
+                                            </div>
+                                        </td>
                                         <td align="center">
 
                                             <button type="button" class="btn btn-link btn-primary btn-lg" data-bs-toggle="modal" data-bs-target="#edit-<?= $data['id_kamar']?>">
@@ -188,11 +200,10 @@
                             </div>
                         </div>
 
-                        <div class="modal-footer">
-                            <input type="reset" value="Reset" class="btn btn-border btn-round btn-primary float-right">
-                            <input type="submit" value="Submit" class="btn btn-border btn-round btn-success float-right">
-                        </div>
-
+                    </div>
+                    <div class="modal-footer">
+                        <input type="reset" value="Reset" class="btn btn-border btn-round btn-primary float-right">
+                        <input type="submit" value="Submit" class="btn btn-border btn-round btn-success float-right">
                     </div>
                 </form>
             </div>

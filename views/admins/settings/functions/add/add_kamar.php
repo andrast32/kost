@@ -10,7 +10,7 @@
                 $_POST['kode'],
                 $_POST['harga'],
                 $_POST['status'],
-                $_POST['khusus'],
+                $_POST['khusus']
             )){
 
                 $kode   = $_POST['kode'];
@@ -23,7 +23,7 @@
                 function uploadFile($file, $targetDir, $allowedExt = []) {
                     if ($file['error'] === 0) {
 
-                        $ext = strtolower(pathinfo($file['name'], PATHINFO_FILENAME));
+                        $ext = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
 
                         if (!empty($allowedExt) && !in_array($ext, $allowedExt)) {
                             return null;
@@ -44,13 +44,45 @@
                     return null;
                 }
 
-                $foto = isset($_FILES['foto']) ? uploadFile($_FILES['foto'], $fotoDir, ['jpg', 'jpeg', 'png']) : null;
+                $foto = isset($_FILES['foto']) ? uploadFile($_FILES['foto'], $fotoDir, ['jpg','jpeg','png']) : null;
 
                 if ($foto) {
-                    $stmt = $mysqli->prepare("INSERT INTO kamar");
+                    $stmt = $mysqli->prepare("INSERT INTO kamar (kode, harga, status, khusus, foto) VALUES (?, ?, ?, ?, ?)");
+                    $stmt->bind_param("sssss", $kode, $harga, $status, $khusus, $foto);
+
+                    if ($stmt->execute()) {
+                        $_SESSION['alert'] = [
+                            'icon' => 'success',
+                            'title' => 'Berhasil!',
+                            'text' => 'Kamar berhasil ditambahkan!'
+                        ];
+                    } else {
+                        $_SESSION['alert'] = [
+                            'icon' => 'error',
+                            'title' => 'Gagal!',
+                            'text' => 'Kamar gagal ditambahkan.'
+                        ];
+                    }
+                } else {
+                    $_SESSION['alert'] = [
+                        'icon' => 'error',
+                        'title' => 'Upload Gagal!',
+                        'text' => 'Foto wajib diunggah.'
+                    ];
                 }
 
+                header("Location: ../../../index?kamar=data_kamar");
+                exit;
+
             }
+    } else {
+        $_SESSION['alert'] = [
+            'icon' => 'error',
+            'title' => 'Error...',
+            'text' => 'Data tidak lengkap! Hubungi admin.'
+        ];
+        header("Location: ../../../index?kamar=data_kamar");
+        exit;
     }
 
 ?>

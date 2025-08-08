@@ -41,7 +41,7 @@ if (isset($_GET['id_biodata'], $_GET['id_user']) && is_numeric($_GET['id_biodata
             $_SESSION['alert'] = [
                 'icon' => 'error',
                 'title' => 'Gagal!',
-                'text' => 'Data gagal dihapus dari database.'
+                'text' => 'Biodata gagal dihapus.'
             ];
         }
     } else {

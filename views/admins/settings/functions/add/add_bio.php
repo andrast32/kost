@@ -66,7 +66,7 @@
                         $_SESSION['alert'] = [
                             'icon' => 'error',
                             'title' => 'Gagal!',
-                            'text' => 'Gagal menyimpan ke database.'
+                            'text' => 'Biodata gagal ditambahkan.'
                         ];
                     }
                 } else {

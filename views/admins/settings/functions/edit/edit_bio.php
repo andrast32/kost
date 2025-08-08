@@ -74,7 +74,7 @@
                 $_SESSION['alert'] = [
                     'icon' => 'error',
                     'title' => 'Gagal!',
-                    'text' => 'Gagal menyimpan perubahan.'
+                    'text' => 'Biodata gagal dirubah.'
                 ];
             }
 

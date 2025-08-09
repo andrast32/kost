@@ -34,15 +34,6 @@
                                 </tr>
                             </thead>
 
-                            <tfoot>
-                                <tr align="center">
-                                    <th>No</th>
-                                    <th>Nama</th>
-                                    <th>Username</th>
-                                    <th>Action</th>
-                                </tr>
-                            </tfoot>
-
                             <tbody>
                                 <?php
                                     $user = $mysqli->query("SELECT * FROM user WHERE deleted != 1 AND role = 'User' ORDER BY id_user ASC");
@@ -57,7 +48,7 @@
                                         <td><?= $data['username']; ?></td>
                                         <td align="center">
 
-                                            <a href="?penyewa=biodata_user&id_user=<?= $data['id_user'] ?>" class="btn btn-link btn-primary btn-lg">
+                                            <a href="?penyewa=biodata_user&sl=<?= $data['sl'] ?>" class="btn btn-link btn-primary btn-lg">
                                                 <i class="far fa-eye"></i>
                                             </a>
 
@@ -77,6 +68,15 @@
                                     </tr>
                                 <?php }  ?>
                             </tbody>
+
+                            <tfoot>
+                                <tr align="center">
+                                    <th>No</th>
+                                    <th>Nama</th>
+                                    <th>Username</th>
+                                    <th>Action</th>
+                                </tr>
+                            </tfoot>
 
                         </table>
                     </div>

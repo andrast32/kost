@@ -33,18 +33,6 @@
                                 </tr>
                             </thead>
 
-                            <tfoot>
-                                <tr align="center">
-                                    <th>No</th>
-                                    <th>Id Kamar</th>
-                                    <th>Harga</th>
-                                    <th>Status</th>
-                                    <th>Khusus</th>
-                                    <th>Foto</th>
-                                    <th>Action</th>
-                                </tr>
-                            </tfoot>
-
                             <tbody>
                                 <?php
                                     $kamar = $mysqli->query("SELECT * FROM kamar ORDER BY kode ASC");
@@ -86,6 +74,18 @@
                                     </tr>
                                 <?php }  ?>
                             </tbody>
+
+                            <tfoot>
+                                <tr align="center">
+                                    <th>No</th>
+                                    <th>Id Kamar</th>
+                                    <th>Harga</th>
+                                    <th>Status</th>
+                                    <th>Khusus</th>
+                                    <th>Foto</th>
+                                    <th>Action</th>
+                                </tr>
+                            </tfoot>
 
                         </table>
                     </div>

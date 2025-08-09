@@ -1,3 +1,26 @@
+<?php
+
+    $sl = isset($_GET['sl']) ? $mysqli->real_escape_string($_GET['sl']) : '';
+
+    $id_user = 0;
+
+    if (!empty($sl)) {
+        $stmt = $mysqli->prepare("SELECT id_user FROM user WHERE sl = ?");
+        $stmt->bind_param("s", $sl);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        if ($row = $result->fetch_assoc()) {
+            $id_user = intval($row['id_user']);
+        }
+        $stmt->close();
+    }
+
+    if ($id_user === 0) {
+        die("tidak ada data yang anda maksud");
+    }
+
+?>
+
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-12">
@@ -13,10 +36,9 @@
                         </a>
 
                         <?php 
-                            $id = $_GET['id_user'];
 
                             $stmt = $mysqli->prepare("SELECT COUNT(*) AS total FROM biodata WHERE id_user = ?");
-                            $stmt->bind_param("i", $id);
+                            $stmt->bind_param("i", $id_user);
                             $stmt->execute();
                             $result = $stmt->get_result();
                             $cek = $result->fetch_assoc();
@@ -50,8 +72,7 @@
                             <tbody>
                                 <?php
                                     $no = 0;
-                                    $id = isset($_GET['id_user']) ? intval($_GET['id_user']) : 0;
-                                    $bio = $mysqli->query("SELECT * FROM biodata JOIN user ON biodata.id_user = user.id_user WHERE biodata.id_user = $id");
+                                    $bio = $mysqli->query("SELECT * FROM biodata JOIN user ON biodata.id_user = user.id_user WHERE biodata.id_user = {$id_user}");
                                     while ($data = $bio->fetch_assoc()) {
                                         $no++;
                                 ?>
@@ -100,12 +121,16 @@
 
 <!-- modal add -->
 <?php
-    $stmt_user = $mysqli->prepare("SELECT nama_user FROM user WHERE id_user = ?");
-    $stmt_user->bind_param("i", $id);
+
+    $sl = $_GET['sl'] ?? '';
+
+    $stmt_user = $mysqli->prepare("SELECT nama_user, id_user FROM user WHERE sl = ?");
+    $stmt_user->bind_param("s", $sl);
     $stmt_user->execute();
     $result_user = $stmt_user->get_result();
     $user_data = $result_user->fetch_assoc();
     $nama_user = $user_data['nama_user'] ?? '';
+    $id_user = $user_data['id_user'] ?? '';
 ?>
 
 <div class="modal fade" id="add" tabindex="-1" role="dialog" aria-hidden="true">
@@ -117,7 +142,7 @@
                     <span class="fw-mediumbold">Add</span>
                     <span class="fw-light">
                         <?= $p?>
-                        <?= $nama_user?>
+                        <?= htmlspecialchars($nama_user)?>
                     </span>
                 </h5>
                 <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
@@ -129,7 +154,7 @@
                 <form action="settings/functions/add/add_bio" method="post" enctype="multipart/form-data">
                     <div class="row">
 
-                        <input type="hidden" readonly class="form-control" name="id_user" id="id_user" value="<?= $_GET['id_user'] ?>">
+                        <input type="hidden" readonly class="form-control" name="id_user" id="id_user" value="<?= htmlspecialchars($id_user) ?>">
 
                         <div class="col-sm-12">
                             <div class="form-group">
@@ -314,7 +339,15 @@
 
 <!-- modal edit -->
 <?php
-    $bio = $mysqli->query("SELECT * FROM biodata JOIN user ON biodata.id_user = user.id_user WHERE biodata.id_user = $id");
+
+    $sl = isset($_GET['sl']) ? $mysqli->real_escape_string($_GET['sl']) : '';
+
+    $bio = $mysqli->query("
+        SELECT biodata.*, user.*
+        FROM biodata
+        JOIN user ON biodata.id_user = user.id_user
+        WHERE user.sl = '$sl'
+    ");
     while ($eb = mysqli_fetch_array($bio)) {
     ?>
     <div class="modal fade" id="edit-<?= $eb['id_biodata'] ?>" tabindex="-1" role="dialog" aria-hidden="true">
@@ -527,7 +560,15 @@
 
 <!-- modal doc -->
 <?php
-    $bio = $mysqli->query("SELECT * FROM biodata JOIN user ON biodata.id_user = user.id_user WHERE biodata.id_user = $id");
+
+    $sl = isset($_GET['sl']) ? $mysqli->real_escape_string($_GET['sl']) : '';
+
+    $bio = $mysqli->query("
+        SELECT biodata.*, user.*
+        FROM biodata
+        JOIN user ON biodata.id_user = user.id_user
+        WHERE user.sl = '$sl'
+    ");
     while ($vd = mysqli_fetch_array($bio)) {
     ?>
     <div class="modal fade" id="doc-<?= $vd['id_user'] ?>" tabindex="-1" role="dialog" aria-hidden="true">

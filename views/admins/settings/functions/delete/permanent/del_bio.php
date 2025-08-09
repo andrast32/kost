@@ -32,6 +32,14 @@ if (isset($_GET['id_biodata'], $_GET['id_user']) && is_numeric($_GET['id_biodata
         $del->bind_param("i", $id_biodata);
 
         if ($del->execute()) {
+
+            $stmt_sl = $mysqli->prepare("SELECT sl FROM user WHERE id_user = ?");
+            $stmt_sl->bind_param("i", $id_user);
+            $stmt_sl->execute();
+            $stmt_sl->bind_result($sl);
+            $stmt_sl->fetch();
+            $stmt_sl->close();
+
             $_SESSION['alert'] = [
                 'icon' => 'success',
                 'title' => 'Berhasil!',
@@ -52,7 +60,7 @@ if (isset($_GET['id_biodata'], $_GET['id_user']) && is_numeric($_GET['id_biodata
         ];
     }
 
-    header("Location: ../../../../index?penyewa=biodata_user&id_user=$id_user");
+    header("Location: ../../../../index?penyewa=biodata_user&sl=" . urlencode($sl));
     exit;
 }
 

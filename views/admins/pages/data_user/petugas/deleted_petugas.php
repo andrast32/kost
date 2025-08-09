@@ -16,6 +16,7 @@
                 <div class="card-body">
                     <div class="table-responsive">
                         <table id="data" class="display table table-striped table-hover">
+
                             <thead>
                                 <tr align="center">
                                     <th>No</th>
@@ -24,14 +25,7 @@
                                     <th style="width: 15%;">Action</th>
                                 </tr>
                             </thead>
-                            <tfoot>
-                                <tr align="center">
-                                    <th>No</th>
-                                    <th>Nama</th>
-                                    <th>Username</th>
-                                    <th style="width: 15%;">Action</th>
-                                </tr>
-                            </tfoot>
+
                             <tbody>
                                 <?php
                                     $admin = $mysqli->query("SELECT * FROM user WHERE deleted = 1 ORDER BY id_user ASC");
@@ -54,6 +48,16 @@
                                     </tr>
                                 <?php } ?>
                             </tbody>
+
+                            <tfoot>
+                                <tr align="center">
+                                    <th>No</th>
+                                    <th>Nama</th>
+                                    <th>Username</th>
+                                    <th style="width: 15%;">Action</th>
+                                </tr>
+                            </tfoot>
+
                         </table>
                     </div>
                 </div>

@@ -34,15 +34,6 @@
                                 </tr>
                             </thead>
 
-                            <tfoot>
-                                <tr align="center">
-                                    <th>No</th>
-                                    <th>Nama</th>
-                                    <th>Username</th>
-                                    <th>Action</th>
-                                </tr>
-                            </tfoot>
-
                             <tbody>
                                 <?php
                                     $user = $mysqli->query("SELECT * FROM user WHERE deleted != 1 AND role = 'Admin' ORDER BY id_user ASC");
@@ -69,6 +60,15 @@
                                     </tr>
                                 <?php }  ?>
                             </tbody>
+
+                            <tfoot>
+                                <tr align="center">
+                                    <th>No</th>
+                                    <th>Nama</th>
+                                    <th>Username</th>
+                                    <th>Action</th>
+                                </tr>
+                            </tfoot>
 
                         </table>
                     </div>

@@ -50,7 +50,7 @@
                                                 <i class="fas fa-folder"></i>
                                             </button>
                                         </td>
-                                        
+
                                     </tr>
 
                                 <?php }?>
@@ -112,80 +112,86 @@
 
                         </div>
 
-                        <div class="col-md-6 pe-0">
-                            <div class="form-group">
+                        <?php if (!empty($vd['scan_ktp'])) : ?>
+                            <div class="col-md-6 pe-0">
+                                <div class="form-group">
 
-                                <label for="ktp">
-                                    KTP <?= $vd['nama_user']?>
-                                </label>
+                                    <label for="ktp">
+                                        KTP <?= $vd['nama_user']?>
+                                    </label>
 
-                                <div class="input-group">
+                                    <div class="input-group">
 
-                                    <span class="input-group-text">
-                                        <i class="far fa-address-card"></i>
-                                    </span>
+                                        <span class="input-group-text">
+                                            <i class="far fa-address-card"></i>
+                                        </span>
 
-                                    <form action="/kost/assets/uploads/biodata/ktp/<?= $vd['scan_ktp']; ?>" method="get"
-                                    >
-                                        <button type="submit" class="btn">
-                                            KTP <?= $vd['nama_user']?>
-                                        </button>
-                                    </form>
+                                        <form action="/kost/assets/uploads/biodata/ktp/<?= $vd['scan_ktp']; ?>" method="get"
+                                        >
+                                            <button type="submit" class="btn">
+                                                KTP <?= $vd['nama_user']?>
+                                            </button>
+                                        </form>
 
-                                </div>
-
-                            </div>
-                        </div>
-
-                        <div class="col-md-6">
-                            <div class="form-group">
-
-                                <label for="kk">
-                                    KK <?= $vd['nama_user']?>
-                                </label>
-
-                                <div class="input-group">
-
-                                    <span class="input-group-text">
-                                        <i class="far fa-address-card"></i>
-                                    </span>
-
-                                    <form action="/kost/assets/uploads/biodata/kk/<?= $vd['scan_kk']; ?>" method="get"
-                                    >
-                                        <button type="submit" class="btn">
-                                            KK <?= $vd['nama_user']?>
-                                        </button>
-                                    </form>
+                                    </div>
 
                                 </div>
-
                             </div>
-                        </div>
+                        <?php endif; ?>
 
-                        <div class="col-sm-12">
-                            <div class="form-group">
+                        <?php if (!empty($vd['scan_kk'])) : ?>
+                            <div class="col-md-6">
+                                <div class="form-group">
 
-                                <label for="ktp">
-                                    Bukti Menikah <?= $vd['nama_user']?>
-                                </label>
+                                    <label for="kk">
+                                        KK <?= $vd['nama_user']?>
+                                    </label>
 
-                                <div class="input-group">
+                                    <div class="input-group">
 
-                                    <span class="input-group-text">
-                                        <i class="fas fa-book"></i>
-                                    </span>
+                                        <span class="input-group-text">
+                                            <i class="far fa-address-card"></i>
+                                        </span>
 
-                                    <form action="/kost/assets/uploads/biodata/bukti_nikah/<?= $vd['bukti_nikah']; ?>" method="get"
-                                    >
-                                        <button type="submit" class="btn">
-                                            Bukti Menikah <?= $vd['nama_user']?>
-                                        </button>
-                                    </form>
+                                        <form action="/kost/assets/uploads/biodata/kk/<?= $vd['scan_kk']; ?>" method="get"
+                                        >
+                                            <button type="submit" class="btn">
+                                                KK <?= $vd['nama_user']?>
+                                            </button>
+                                        </form>
+
+                                    </div>
 
                                 </div>
-
                             </div>
-                        </div>
+                        <?php endif; ?>
+
+                        <?php if (!empty($vd['bukti_nikah'])) : ?>
+                            <div class="col-sm-12">
+                                <div class="form-group">
+
+                                    <label for="ktp">
+                                        Bukti Menikah <?= $vd['nama_user']?>
+                                    </label>
+
+                                    <div class="input-group">
+
+                                        <span class="input-group-text">
+                                            <i class="fas fa-book"></i>
+                                        </span>
+
+                                        <form action="/kost/assets/uploads/biodata/bukti_nikah/<?= $vd['bukti_nikah']; ?>" method="get"
+                                        >
+                                            <button type="submit" class="btn">
+                                                Bukti Menikah <?= $vd['nama_user']?>
+                                            </button>
+                                        </form>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        <?php endif; ?>
 
                     </div>
                 </div>

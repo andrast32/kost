@@ -1,3 +1,10 @@
+<?php 
+
+    $jumlah_penyewa = $mysqli->query("SELECT COUNT(*) as total FROM user WHERE role = 'penyewa'")->fetch_assoc()['total'];
+    $jumlah_kamar = $mysqli->query("SELECT COUNT(*) as total FROM kamar")->fetch_assoc()['total'];
+    $jumlah_fasilitas = $mysqli->query("SELECT COUNT(*) as total FROM fasilitas")->fetch_assoc()['total'];
+
+?>
 
 <div class="row">
     <div class="col-sm-6 col-md-3">
@@ -12,7 +19,7 @@
                     <div class="col col-stats ms-3 ms-sm-0">
                         <div class="numbers">
                             <p class="card-category">Jumlah Penyewa</p>
-                            <h4 class="card-title">1,294</h4>
+                            <h4 class="card-title"><?= $jumlah_penyewa ?></h4>
                         </div>
                     </div>
                 </div>
@@ -31,7 +38,7 @@
                     <div class="col col-stats ms-3 ms-sm-0">
                         <div class="numbers">
                             <p class="card-category">Jumlah Kamar</p>
-                            <h4 class="card-title">1303</h4>
+                            <h4 class="card-title"><?= $jumlah_kamar ?></h4>
                         </div>
                     </div>
                 </div>
@@ -50,7 +57,7 @@
                     <div class="col col-stats ms-3 ms-sm-0">
                         <div class="numbers">
                             <p class="card-category">Jumlah fasilitas</p>
-                            <h4 class="card-title">1303</h4>
+                            <h4 class="card-title"><?= $jumlah_fasilitas ?></h4>
                         </div>
                     </div>
                 </div>

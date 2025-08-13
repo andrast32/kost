@@ -48,7 +48,7 @@
                                         <td><?= $data['username']; ?></td>
                                         <td align="center">
 
-                                            <a href="?penyewa=biodata_user&sl=<?= $data['sl'] ?>" class="btn btn-link btn-primary btn-lg">
+                                            <a href="?penyewa=biodata_user&sl_user=<?= $data['sl_user'] ?>" class="btn btn-link btn-primary btn-lg">
                                                 <i class="far fa-eye"></i>
                                             </a>
 

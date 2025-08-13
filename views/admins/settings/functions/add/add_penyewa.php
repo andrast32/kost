@@ -18,7 +18,7 @@
                 $nama_user = $_POST['nama_user'];
                 $role = $_POST['role'];
 
-                $sl = bin2hex(random_bytes(32));
+                $sl_user = bin2hex(random_bytes(32));
 
                 $stmt_cek = $mysqli->prepare("SELECT COUNT(*) FROM user WHERE username = ? ");
                 $stmt_cek->bind_param("s", $username);
@@ -34,8 +34,8 @@
                         'text' => 'Username sudah dipakai!'
                     ];
                 } else {
-                    $stmt = $mysqli->prepare("INSERT INTO user (username, password, nama_user, role, sl) VALUES (?,?,?,?,?) ");
-                    $stmt->bind_param("sssss", $username, $password, $nama_user, $role, $sl);
+                    $stmt = $mysqli->prepare("INSERT INTO user (username, password, nama_user, role, sl_user) VALUES (?,?,?,?,?) ");
+                    $stmt->bind_param("sssss", $username, $password, $nama_user, $role, $sl_user);
 
                     if ($stmt->execute()) {
                         $_SESSION['alert'] = [

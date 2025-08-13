@@ -30,10 +30,10 @@
                     ];
                 } else {
 
-                    $sl = bin2hex(random_bytes(32));
+                    $sl_user = bin2hex(random_bytes(32));
 
-                    $stmt = $mysqli->prepare("UPDATE user SET username = ?, nama_user = ?, sl = ? WHERE id_user = ? ");
-                    $stmt->bind_param("sssi", $username, $nama_user, $sl, $id_user);
+                    $stmt = $mysqli->prepare("UPDATE user SET username = ?, nama_user = ?, sl_user = ? WHERE id_user = ? ");
+                    $stmt->bind_param("sssi", $username, $nama_user, $sl_user, $id_user);
 
                     if ($stmt->execute()) {
                         $_SESSION['alert'] = [

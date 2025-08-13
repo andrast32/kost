@@ -18,6 +18,8 @@
                 $status = $_POST['status'];
                 $khusus = $_POST['khusus'];
 
+                $sl_kamar = bin2hex(random_bytes(32));
+
                 $fotoDir    = "../../../../../assets/uploads/kamar/";
 
                 function uploadFile($file, $targetDir, $allowedExt = []) {
@@ -46,9 +48,25 @@
 
                 $foto = isset($_FILES['foto']) ? uploadFile($_FILES['foto'], $fotoDir, ['jpg','jpeg','png']) : null;
 
-                if ($foto) {
-                    $stmt = $mysqli->prepare("INSERT INTO kamar (kode, harga, status, khusus, foto) VALUES (?, ?, ?, ?, ?)");
-                    $stmt->bind_param("sssss", $kode, $harga, $status, $khusus, $foto);
+                $stmt_cek = $mysqli->prepare("SELECT COUNT(*) FROM kamar WHERE kode = ? ");
+                $stmt_cek->bind_param("s", $kode);
+                $stmt_cek->execute();
+                $stmt_cek->bind_result($count);
+                $stmt_cek->fetch();
+                $stmt_cek->close();
+
+                if ($count > 0) {
+                    $_SESSION['alert'] = [
+                        'icon' => 'error',
+                        'title' => 'Gagal!',
+                        'text' => 'Kamar dengan kode tersebut sudah ada.'
+                    ];
+                    header("Location: ../../../index?kamar=data_kamar");
+                    exit;
+
+                } elseif ($foto) {
+                    $stmt = $mysqli->prepare("INSERT INTO kamar (kode, harga, status, khusus, foto, sl_kamar) VALUES (?, ?, ?, ?, ?, ?)");
+                    $stmt->bind_param("ssssss", $kode, $harga, $status, $khusus, $foto, $sl_kamar);
 
                     if ($stmt->execute()) {
                         $_SESSION['alert'] = [

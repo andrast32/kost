@@ -66,12 +66,12 @@
 
             if ($stmt->execute()) {
 
-                $stmt_sl = $mysqli->prepare("SELECT sl FROM user WHERE id_user = ?");
-                $stmt_sl->bind_param("i", $id_user);
-                $stmt_sl->execute();
-                $stmt_sl->bind_result($sl);
-                $stmt_sl->fetch();
-                $stmt_sl->close();
+                $stmt_sl_user = $mysqli->prepare("SELECT sl_user FROM user WHERE id_user = ?");
+                $stmt_sl_user->bind_param("i", $id_user);
+                $stmt_sl_user->execute();
+                $stmt_sl_user->bind_result($sl_user);
+                $stmt_sl_user->fetch();
+                $stmt_sl_user->close();
 
                 $_SESSION['alert'] = [
                     'icon' => 'success',
@@ -86,7 +86,7 @@
                 ];
             }
 
-            header("Location: ../../../index?penyewa=biodata_user&sl=" . urlencode($sl));
+            header("Location: ../../../index?penyewa=biodata_user&sl_user=" . urlencode($sl_user));
             exit;
         }
     }
@@ -96,7 +96,7 @@
         'title' => 'Error...',
         'text' => 'Data tidak lengkap! Hubungi admin.'
     ];
-    header("Location: ../../../index?penyewa=biodata_user&sl=" . urlencode($sl));
+    header("Location: ../../../index?penyewa=biodata_user&sl_user=" . urlencode($sl_user));
     exit;
 
 ?>

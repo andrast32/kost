@@ -115,10 +115,10 @@
                 <form action="settings/functions/add/add_kamar" method="post" enctype="multipart/form-data">
                     <div class="row">
 
-                        <div class="col-sm-12">
+                        <div class="col-md-6 pe-0">
                             <div class="form-group">
 
-                                <label for="kode">kode <span class="text-danger">*</span></label>
+                                <label for="kode">kode kamar <span class="text-danger">*</span></label>
 
                                 <div class="input-group">
 
@@ -133,10 +133,10 @@
                             </div>
                         </div>
 
-                        <div class="col-sm-12">
+                        <div class="col-md-6">
                             <div class="form-group">
 
-                                <label for="harga">Harga <span class="text-danger">*</span></label>
+                                <label for="harga">Harga kamar <span class="text-danger">*</span></label>
 
                                 <div class="input-group">
 
@@ -151,7 +151,7 @@
                             </div>
                         </div>
 
-                        <div class="col-sm-12">
+                        <div class="col-md-6 pe-0">
                             <div class="form-group">
 
                                 <label for="khusus">Kamar Khusus <span class="text-danger">*</span></label>
@@ -179,7 +179,7 @@
                             </div>
                         </div>
 
-                        <div class="col-sm-12">
+                        <div class="col-md-6">
                             <div class="form-group">
 
                                 <label for="foto">
@@ -215,9 +215,9 @@
 <!-- modal edit -->
 <?php
     $kamar = $mysqli->query("SELECT * FROM kamar WHERE id_kamar");
-    while ($ea = mysqli_fetch_array($kamar)) {
+    while ($ek = mysqli_fetch_array($kamar)) {
     ?>
-    <div class="modal fade" id="edit-<?= $ea['id_kamar']?>" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal fade" id="edit-<?= $ek['id_kamar']?>" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
 
@@ -232,41 +232,114 @@
                 </div>
 
                 <div class="modal-body">
-                    <form action="settings/functions/edit/edit_petugas" method="post" enctype="multipart/form-data">
+                    <form action="settings/functions/edit/edit_kamar" method="post" enctype="multipart/form-data">
                         <div class="row">
 
-                            <div class="col-sm-12">
+                            <div class="col-md-6 pe-0">
                                 <div class="form-group">
 
-                                    <input type="hidden" name="id_kamar" id="id_kamar" value="<?= $ea['id_kamar']?>" class="form-control" readonly>
-
-                                    <label for="harga">harga <span class="text-danger">*</span></label>
+                                    <label for="nama">Kode kamar</label>
 
                                     <div class="input-group">
 
                                         <span class="input-group-text">
-                                            <i class="fas fa-at"></i>
+                                            <i class="fas fa-key"></i>
                                         </span>
 
-                                        <input type="text" name="username" id="username" class="form-control" placeholder="Masukan username" value="<?= $ea['username']?>" required>
+                                        <input type="text" name="kode" id="kode" class="form-control" placeholder="Masukan kode kamar" value="<?= $ek['kode']?>" required>
 
                                     </div>
 
                                 </div>
                             </div>
 
-                            <div class="col-sm-12">
+                            <div class="col-md-6">
                                 <div class="form-group">
 
-                                    <label for="nama">Nama</label>
+                                    <input type="hidden" name="id_kamar" id="id_kamar" value="<?= $ek['id_kamar']?>" class="form-control" readonly>
+
+                                    <label for="harga">harga <span class="text-danger">*</span></label>
 
                                     <div class="input-group">
 
                                         <span class="input-group-text">
-                                            <i class="fas fa-user"></i>
+                                            <i class="fas fa-tag"></i>
                                         </span>
 
-                                        <input type="text" name="nama_kamar" id="nama_kamar" class="form-control" placeholder="Masukan nama" value="<?= $ea['nama_kamar']?>" required>
+                                        <input type="text" name="harga" id="harga" class="form-control" placeholder="Masukan harga" value="<?= $ek['harga']?>" required>
+
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 pe-0">
+                                <div class="form-group">
+
+                                    <label for="khusus">Kamar Khusus <span class="text-danger">*</span></label>
+
+                                    <div class="input-group">
+
+                                        <span class="input-group-text">
+                                            <i class="fas fa-venus-mars"></i>
+                                        </span>
+
+                                        <select name="khusus" id="khusus" class="form-control">
+                                            <option value="" disabled selected>Kamar Khusus</option>
+                                            <option 
+                                            value="Laki-Laki"
+                                            <?= $ek['khusus'] == 'Laki-laki' ? 'selected' : '' ?>>
+                                                Laki-Laki
+                                            </option>
+                                            <option 
+                                            value="Perempuan"
+                                            <?= $ek['khusus'] == 'Perempuan' ? 'selected' : '' ?>>
+                                                Perempuan
+                                            </option>
+                                        </select>
+
+                                    </div>
+
+                                    <div class="input-group">
+
+                                        <input type="hidden" name="status" id="status" class="form-control" value="Kosong" readonly required>
+
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+
+                                    <label for="foto">
+                                        Foto Kamar 
+                                        <span class="text-danger">*</span>
+                                    </label>
+
+                                    <div class="input-group">
+
+                                        <span class="input-group-text">
+                                            <i class="fas fa-camera"></i>
+                                        </span>
+
+                                        <input type="file" name="foto" id="foto" class="form-control" accept=".jpg, .png, .jpeg">
+
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="col-md-6" style="margin-left: 50%;">
+                                <div class="form-group">
+
+                                    <label for="foto">
+                                        Foto Kamar Sebelum diedit
+                                    </label>
+
+                                    <div class="input-group">
+
+                                        <img src="/kost/assets/uploads/kamar/<?= $ek['foto']; ?>" alt="Foto kamar <?= $ek['kode']; ?>" class="avatar-img rounded" style="height: 10rem;">
 
                                     </div>
 
@@ -288,7 +361,7 @@
 <?php  } ?>
 
 <script>
-    function deleteUser(id_kamar) {
+    function deleteKamar(id_kamar) {
         Swal.fire({
             title: 'Yakin mau hapus?',
             text: "Data ini akan dihapus!",
@@ -300,7 +373,7 @@
             cancelButtonText: 'Batal'
         }).then((result) => {
             if (result.isConfirmed) {
-                window.location.href = "settings/functions/delete/soft/sft_petugas?id=" + id_kamar;
+                window.location.href = "settings/functions/delete/permanent/del_kamar?id=" + id_kamar;
             }
         });
     }

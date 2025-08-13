@@ -1,12 +1,12 @@
 <?php
 
-    $sl = isset($_GET['sl']) ? $mysqli->real_escape_string($_GET['sl']) : '';
+    $sl_user = isset($_GET['sl_user']) ? $mysqli->real_escape_string($_GET['sl_user']) : '';
 
     $id_user = 0;
 
-    if (!empty($sl)) {
-        $stmt = $mysqli->prepare("SELECT id_user FROM user WHERE sl = ?");
-        $stmt->bind_param("s", $sl);
+    if (!empty($sl_user)) {
+        $stmt = $mysqli->prepare("SELECT id_user FROM user WHERE sl_user = ?");
+        $stmt->bind_param("s", $sl_user);
         $stmt->execute();
         $result = $stmt->get_result();
         if ($row = $result->fetch_assoc()) {
@@ -122,10 +122,10 @@
 <!-- modal add -->
 <?php
 
-    $sl = $_GET['sl'] ?? '';
+    $sl_user = $_GET['sl_user'] ?? '';
 
-    $stmt_user = $mysqli->prepare("SELECT nama_user, id_user FROM user WHERE sl = ?");
-    $stmt_user->bind_param("s", $sl);
+    $stmt_user = $mysqli->prepare("SELECT nama_user, id_user FROM user WHERE sl_user = ?");
+    $stmt_user->bind_param("s", $sl_user);
     $stmt_user->execute();
     $result_user = $stmt_user->get_result();
     $user_data = $result_user->fetch_assoc();
@@ -340,13 +340,13 @@
 <!-- modal edit -->
 <?php
 
-    $sl = isset($_GET['sl']) ? $mysqli->real_escape_string($_GET['sl']) : '';
+    $sl_user = isset($_GET['sl_user']) ? $mysqli->real_escape_string($_GET['sl_user']) : '';
 
     $bio = $mysqli->query("
         SELECT biodata.*, user.*
         FROM biodata
         JOIN user ON biodata.id_user = user.id_user
-        WHERE user.sl = '$sl'
+        WHERE user.sl_user = '$sl_user'
     ");
     while ($eb = mysqli_fetch_array($bio)) {
     ?>
@@ -561,13 +561,13 @@
 <!-- modal doc -->
 <?php
 
-    $sl = isset($_GET['sl']) ? $mysqli->real_escape_string($_GET['sl']) : '';
+    $sl_user = isset($_GET['sl_user']) ? $mysqli->real_escape_string($_GET['sl_user']) : '';
 
     $bio = $mysqli->query("
         SELECT biodata.*, user.*
         FROM biodata
         JOIN user ON biodata.id_user = user.id_user
-        WHERE user.sl = '$sl'
+        WHERE user.sl_user = '$sl_user'
     ");
     while ($vd = mysqli_fetch_array($bio)) {
     ?>

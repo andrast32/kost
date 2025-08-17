@@ -1,6 +1,6 @@
 <?php 
 
-    $jumlah_penyewa = $mysqli->query("SELECT COUNT(*) as total FROM user WHERE role = 'penyewa'")->fetch_assoc()['total'];
+    $jumlah_penyewa = $mysqli->query("SELECT COUNT(*) as total FROM user WHERE role = 'user' AND deleted != 1")->fetch_assoc()['total'];
     $jumlah_kamar = $mysqli->query("SELECT COUNT(*) as total FROM kamar")->fetch_assoc()['total'];
     $jumlah_fasilitas = $mysqli->query("SELECT COUNT(*) as total FROM fasilitas")->fetch_assoc()['total'];
 

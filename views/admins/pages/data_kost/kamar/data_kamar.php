@@ -368,7 +368,7 @@
             cancelButtonText: 'Batal'
         }).then((result) => {
             if (result.isConfirmed) {
-                window.location.href = "settings/functions/delete/permanent/del_kamar?id=" + id_kamar;
+                window.location.href = "settings/functions/delete/permanent/del_kamar?id_kamar=" + id_kamar;
             }
         });
     }

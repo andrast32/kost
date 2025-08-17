@@ -62,7 +62,7 @@
                                         </td>
                                         <td align="center">
 
-                                            <button type="button" class="btn btn-link btn-primary btn-lg" data-bs-toggle="modal" data-bs-target="#edit-<?= $data['id_kamar']?>">
+                                            <button type="button" class="btn btn-link btn-primary btn-lg" data-bs-toggle="modal" data-bs-target="#edit-<?= $data['sl_kamar']?>">
                                                 <i class="fas fa-edit"></i>
                                             </button>
 
@@ -214,10 +214,10 @@
 
 <!-- modal edit -->
 <?php
-    $kamar = $mysqli->query("SELECT * FROM kamar WHERE id_kamar");
+    $kamar = $mysqli->query("SELECT * FROM kamar WHERE sl_kamar");
     while ($ek = mysqli_fetch_array($kamar)) {
     ?>
-    <div class="modal fade" id="edit-<?= $ek['id_kamar']?>" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal fade" id="edit-<?= $ek['sl_kamar']?>" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
 
@@ -246,6 +246,8 @@
                                             <i class="fas fa-key"></i>
                                         </span>
 
+                                        <input type="hidden" name="id_kamar" id="id_kamar" value="<?= $ek['id_kamar']?>" class="form-control" readonly>
+
                                         <input type="text" name="kode" id="kode" class="form-control" placeholder="Masukan kode kamar" value="<?= $ek['kode']?>" required>
 
                                     </div>
@@ -256,7 +258,6 @@
                             <div class="col-md-6">
                                 <div class="form-group">
 
-                                    <input type="hidden" name="id_kamar" id="id_kamar" value="<?= $ek['id_kamar']?>" class="form-control" readonly>
 
                                     <label for="harga">harga <span class="text-danger">*</span></label>
 
@@ -288,7 +289,7 @@
                                             <option value="" disabled selected>Kamar Khusus</option>
                                             <option 
                                             value="Laki-Laki"
-                                            <?= $ek['khusus'] == 'Laki-laki' ? 'selected' : '' ?>>
+                                            <?= $ek['khusus'] == 'Laki-Laki' ? 'selected' : '' ?>>
                                                 Laki-Laki
                                             </option>
                                             <option 
@@ -297,12 +298,6 @@
                                                 Perempuan
                                             </option>
                                         </select>
-
-                                    </div>
-
-                                    <div class="input-group">
-
-                                        <input type="hidden" name="status" id="status" class="form-control" value="Kosong" readonly required>
 
                                     </div>
 

@@ -8,13 +8,15 @@
     if($_SERVER["REQUEST_METHOD"] == "POST") {
         if (isset(
                 $_POST['id_kamar'], 
-                $_POST['kode'], 
+                $_POST['kode'],
+                $_POST['deskripsi'], 
                 $_POST['harga'], 
                 $_POST['khusus'] 
             )) {
 
                 $id_kamar = intval($_POST['id_kamar']);
                 $kode = $_POST['kode'];
+                $deskripsi = $_POST['deskripsi'];
                 $harga = $_POST['harga'];
                 $khusus = $_POST['khusus'];
 
@@ -77,8 +79,8 @@
 
                     $sl_kamar = bin2hex(random_bytes(32));
 
-                    $stmt = $mysqli->prepare("UPDATE kamar SET kode = ?, harga = ?, khusus = ?, foto = ?, sl_kamar = ? WHERE id_kamar = ?");
-                    $stmt->bind_param("sssssi", $kode, $harga, $khusus, $foto, $sl_kamar, $id_kamar);
+                    $stmt = $mysqli->prepare("UPDATE kamar SET kode = ?, deskripsi = ?, harga = ?, khusus = ?, foto = ?, sl_kamar = ? WHERE id_kamar = ?");
+                    $stmt->bind_param("ssssssi", $kode, $deskripsi, $harga, $khusus, $foto, $sl_kamar, $id_kamar);
 
                     if ($stmt->execute()) {
                         $_SESSION['alert'] = [

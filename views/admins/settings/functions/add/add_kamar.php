@@ -8,12 +8,14 @@
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (isset(
                 $_POST['kode'],
+                $_POST['deskripsi'],
                 $_POST['harga'],
                 $_POST['status'],
                 $_POST['khusus']
             )){
 
                 $kode   = $_POST['kode'];
+                $deskripsi = $_POST['deskripsi'];
                 $harga  = $_POST['harga'];
                 $status = $_POST['status'];
                 $khusus = $_POST['khusus'];
@@ -65,8 +67,8 @@
                     exit;
 
                 } elseif ($foto) {
-                    $stmt = $mysqli->prepare("INSERT INTO kamar (kode, harga, status, khusus, foto, sl_kamar) VALUES (?, ?, ?, ?, ?, ?)");
-                    $stmt->bind_param("ssssss", $kode, $harga, $status, $khusus, $foto, $sl_kamar);
+                    $stmt = $mysqli->prepare("INSERT INTO kamar (kode, deskripsi, harga, status, khusus, foto, sl_kamar) VALUES (?, ?, ?, ?, ?, ?, ?)");
+                    $stmt->bind_param("sssssss", $kode, $deskripsi, $harga, $status, $khusus, $foto, $sl_kamar);
 
                     if ($stmt->execute()) {
                         $_SESSION['alert'] = [

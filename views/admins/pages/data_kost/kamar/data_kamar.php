@@ -62,7 +62,7 @@
                                         </td>
                                         <td align="center">
 
-                                            <button type="button" class="btn btn-link btn-primary btn-lg" data-bs-toggle="modal" data-bs-target="#edit-<?= $data['sl_kamar']?>">
+                                            <button type="button" class="btn btn-link btn-primary btn-lg" data-bs-toggle="modal" data-bs-target="#edit-<?= $data['id_kamar']?>">
                                                 <i class="fas fa-edit"></i>
                                             </button>
 
@@ -200,6 +200,27 @@
                             </div>
                         </div>
 
+                        <div class="col-sm-12">
+                            <div class="form-group">
+
+                                <label for="deskripsi">
+                                    Deskripsi Kamar 
+                                    <span class="text-danger">*</span>
+                                </label>
+
+                                <div class="input-group">
+
+                                    <span class="input-group-text">
+                                        <i class="fas fa-list"></i>
+                                    </span>
+
+                                    <textarea name="deskripsi" id="deskripsi" class="form-control" rows="3" placeholder="Masukan deskripsi kamar" required style="resize: none;"></textarea>
+
+                                </div>
+
+                            </div>
+                        </div>
+
                     </div>
                     <div class="modal-footer">
                         <input type="reset" value="Reset" class="btn btn-border btn-round btn-primary float-right">
@@ -214,10 +235,10 @@
 
 <!-- modal edit -->
 <?php
-    $kamar = $mysqli->query("SELECT * FROM kamar WHERE sl_kamar");
+    $kamar = $mysqli->query("SELECT * FROM kamar WHERE id_kamar");
     while ($ek = mysqli_fetch_array($kamar)) {
     ?>
-    <div class="modal fade" id="edit-<?= $ek['sl_kamar']?>" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal fade" id="edit-<?= $ek['id_kamar']?>" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
 
@@ -325,16 +346,21 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-6" style="margin-left: 50%;">
+                            <div class="col-sm-12">
                                 <div class="form-group">
 
-                                    <label for="foto">
-                                        Foto Kamar Sebelum diedit
+                                    <label for="deskripsi">
+                                        Deskripsi Kamar 
+                                        <span class="text-danger">*</span>
                                     </label>
 
                                     <div class="input-group">
 
-                                        <img src="/kost/assets/uploads/kamar/<?= $ek['foto']; ?>" alt="Foto kamar <?= $ek['kode']; ?>" class="avatar-img rounded" style="height: 10rem;">
+                                        <span class="input-group-text">
+                                            <i class="fas fa-list"></i>
+                                        </span>
+
+                                        <textarea name="deskripsi" id="deskripsi" class="form-control" rows="3" placeholder="Masukan deskripsi kamar" required style="resize: none;"><?= $ek['deskripsi']; ?></textarea>
 
                                     </div>
 

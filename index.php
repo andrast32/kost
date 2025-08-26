@@ -18,7 +18,7 @@
         <link rel="stylesheet" href="/kost/assets/UI/Dashboards/assets/css/templatemo-villa-agency.css">
         <link rel="stylesheet" href="/kost/assets/UI/Dashboards/assets/css/owl.css">
         <link rel="stylesheet" href="/kost/assets/UI/Dashboards/assets/css/animate.css">
-        <link rel="stylesheet"href="https://unpkg.com/swiper@7/swiper-bundle.min.css"/>
+        <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css"/>
 
     </head>
 

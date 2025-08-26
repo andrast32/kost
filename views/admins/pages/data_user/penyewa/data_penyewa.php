@@ -14,9 +14,21 @@
                                 <i class="fas fa-plus"></i> Add <?= $p?>
                         </button>
 
-                        <a href="?penyewa=deleted_penyewa" class="btn btn-round btn-danger btn-border">
-                            <i class="fas fa-trash"></i> Lihat sampah
-                        </a>
+                        <?php 
+                            $user = $mysqli->query("SELECT deleted FROM user WHERE role = 'User'");
+                            while ($sp = mysqli_fetch_array($user)) {
+
+                                if ( $sp['deleted'] == 1) :
+                                    ?>
+
+                                    <a href="?penyewa=deleted_penyewa" class="btn btn-round btn-danger btn-border">
+                                        <i class="fas fa-trash"></i> Lihat sampah
+                                    </a>
+
+                                    <?php 
+                                endif; 
+                            } 
+                        ?>
 
                     </div>
                 </div>

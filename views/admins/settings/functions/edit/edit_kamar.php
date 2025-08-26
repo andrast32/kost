@@ -8,14 +8,14 @@
     if($_SERVER["REQUEST_METHOD"] == "POST") {
         if (isset(
                 $_POST['id_kamar'], 
-                $_POST['kode'],
+                $_POST['kode_kamar'],
                 $_POST['deskripsi'], 
                 $_POST['harga'], 
                 $_POST['khusus'] 
             )) {
 
                 $id_kamar = intval($_POST['id_kamar']);
-                $kode = $_POST['kode'];
+                $kode_kamar = $_POST['kode_kamar'];
                 $deskripsi = $_POST['deskripsi'];
                 $harga = $_POST['harga'];
                 $khusus = $_POST['khusus'];
@@ -59,8 +59,8 @@
                     unlink($fotoDir . $data['foto']);
                 }
 
-                $stmt_cek = $mysqli->prepare("SELECT COUNT(*) FROM kamar WHERE kode = ? AND id_kamar != ?");
-                $stmt_cek->bind_param("si", $kode, $id_kamar);
+                $stmt_cek = $mysqli->prepare("SELECT COUNT(*) FROM kamar WHERE kode_kamar = ? AND id_kamar != ?");
+                $stmt_cek->bind_param("si", $kode_kamar, $id_kamar);
                 $stmt_cek->execute();
                 $stmt_cek->bind_result($count);
                 $stmt_cek->fetch();
@@ -79,8 +79,8 @@
 
                     $sl_kamar = bin2hex(random_bytes(32));
 
-                    $stmt = $mysqli->prepare("UPDATE kamar SET kode = ?, deskripsi = ?, harga = ?, khusus = ?, foto = ?, sl_kamar = ? WHERE id_kamar = ?");
-                    $stmt->bind_param("ssssssi", $kode, $deskripsi, $harga, $khusus, $foto, $sl_kamar, $id_kamar);
+                    $stmt = $mysqli->prepare("UPDATE kamar SET kode_kamar = ?, deskripsi = ?, harga = ?, khusus = ?, foto = ?, sl_kamar = ? WHERE id_kamar = ?");
+                    $stmt->bind_param("ssssssi", $kode_kamar, $deskripsi, $harga, $khusus, $foto, $sl_kamar, $id_kamar);
 
                     if ($stmt->execute()) {
                         $_SESSION['alert'] = [

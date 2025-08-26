@@ -7,14 +7,14 @@
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (isset(
-                $_POST['kode'],
+                $_POST['kode_kamar'],
                 $_POST['deskripsi'],
                 $_POST['harga'],
                 $_POST['status'],
                 $_POST['khusus']
             )){
 
-                $kode   = $_POST['kode'];
+                $kode_kamar   = $_POST['kode_kamar'];
                 $deskripsi = $_POST['deskripsi'];
                 $harga  = $_POST['harga'];
                 $status = $_POST['status'];
@@ -50,8 +50,8 @@
 
                 $foto = isset($_FILES['foto']) ? uploadFile($_FILES['foto'], $fotoDir, ['jpg','jpeg','png']) : null;
 
-                $stmt_cek = $mysqli->prepare("SELECT COUNT(*) FROM kamar WHERE kode = ? ");
-                $stmt_cek->bind_param("s", $kode);
+                $stmt_cek = $mysqli->prepare("SELECT COUNT(*) FROM kamar WHERE kode_kamar = ? ");
+                $stmt_cek->bind_param("s", $kode_kamar);
                 $stmt_cek->execute();
                 $stmt_cek->bind_result($count);
                 $stmt_cek->fetch();
@@ -67,8 +67,8 @@
                     exit;
 
                 } elseif ($foto) {
-                    $stmt = $mysqli->prepare("INSERT INTO kamar (kode, deskripsi, harga, status, khusus, foto, sl_kamar) VALUES (?, ?, ?, ?, ?, ?, ?)");
-                    $stmt->bind_param("sssssss", $kode, $deskripsi, $harga, $status, $khusus, $foto, $sl_kamar);
+                    $stmt = $mysqli->prepare("INSERT INTO kamar (kode_kamar, deskripsi, harga, status, khusus, foto, sl_kamar) VALUES (?, ?, ?, ?, ?, ?, ?)");
+                    $stmt->bind_param("sssssss", $kode_kamar, $deskripsi, $harga, $status, $khusus, $foto, $sl_kamar);
 
                     if ($stmt->execute()) {
                         $_SESSION['alert'] = [

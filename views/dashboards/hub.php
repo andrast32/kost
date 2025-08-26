@@ -79,11 +79,32 @@
 
                                 <!-- menu start -->
                                 <ul class="nav">
-                                    <li><a href="/kost/">Home</a></li>
-                                    <li><a href="/kost/views/dashboards/kamar">Kamar</a></li>
-                                    <li><a href="/kost/views/dashboards/hub" class="active">Hubungi kami</a></li>
-                                    <li><a href="/kost/views/dashboards/login"><i class="fas fa-sign-in-alt"></i> Login</a></li>
+                                    <li>
+                                        <a href="/kost/">
+                                            Home
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="/kost/views/dashboards/kamar">
+                                            Kamar
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="/kost/views/dashboards/hub" class="active">
+                                            Hubungi kami
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="/kost/views/dashboards/login">
+                                            <i class="fas fa-sign-in-alt"></i>
+                                            Login
+                                        </a>
+                                    </li>
+                                    <li></li>
                                 </ul>
+                                <a class="menu-trigger">
+                                    <span>Menu</span>
+                                </a>
                                 <!-- menu end -->
                             </nav>
                         </div>

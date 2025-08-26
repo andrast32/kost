@@ -35,7 +35,7 @@
 
                             <tbody>
                                 <?php
-                                    $kamar = $mysqli->query("SELECT * FROM kamar ORDER BY kode ASC");
+                                    $kamar = $mysqli->query("SELECT * FROM kamar ORDER BY kode_kamar ASC");
 
                                     $no = 0;
                                     while ($data = mysqli_fetch_array($kamar)) {
@@ -43,7 +43,7 @@
                                 ?>
                                     <tr>
                                         <td align="center"><?= $no; ?></td>
-                                        <td align="center"><?= $data['kode']; ?></td>
+                                        <td align="center"><?= $data['kode_kamar']; ?></td>
                                         <td>
                                             <?php
                                                 $harga = "Rp. " . number_format($data['harga'], 2 , ",", ".");
@@ -56,7 +56,7 @@
                                             <div class="avatar avatar-xxl">
                                                 <img 
                                                 src="/kost/assets/uploads/kamar/<?= $data['foto']; ?>" 
-                                                alt="Foto kamar <?= $data['kode']; ?>"
+                                                alt="Foto kamar <?= $data['kode_kamar']; ?>"
                                                 class="avatar-img rounded">
                                             </div>
                                         </td>
@@ -118,7 +118,7 @@
                         <div class="col-md-6 pe-0">
                             <div class="form-group">
 
-                                <label for="kode">kode kamar <span class="text-danger">*</span></label>
+                                <label for="kode_kamar">kode kamar <span class="text-danger">*</span></label>
 
                                 <div class="input-group">
 
@@ -126,7 +126,7 @@
                                         <i class="fas fa-key"></i>
                                     </span>
 
-                                    <input type="text" name="kode" id="kode" class="form-control" placeholder="Masukan kode kamar" required>
+                                    <input type="text" name="kode_kamar" id="kode_kamar" class="form-control" placeholder="Masukan kode kamar" required>
 
                                 </div>
 
@@ -269,7 +269,7 @@
 
                                         <input type="hidden" name="id_kamar" id="id_kamar" value="<?= $ek['id_kamar']?>" class="form-control" readonly>
 
-                                        <input type="text" name="kode" id="kode" class="form-control" placeholder="Masukan kode kamar" value="<?= $ek['kode']?>" required>
+                                        <input type="text" name="kode_kamar" id="kode_kamar" class="form-control" placeholder="Masukan kode kamar" value="<?= $ek['kode_kamar']?>" required>
 
                                     </div>
 

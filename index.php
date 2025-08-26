@@ -79,11 +79,32 @@
 
                                 <!-- menu start -->
                                 <ul class="nav">
-                                    <li><a href="/kost/" class="active">Home</a></li>
-                                    <li><a href="/kost/views/dashboards/kamar">Kamar</a></li>
-                                    <li><a href="/kost/views/dashboards/hub">Hubungi kami</a></li>
-                                    <li><a href="/kost/views/dashboards/login"><i class="fas fa-sign-in-alt"></i> Login</a></li>
+                                    <li>
+                                        <a href="/kost/" class="active">
+                                            Home
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="/kost/views/dashboards/kamar">
+                                            Kamar
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="/kost/views/dashboards/hub">
+                                            Hubungi kami
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="/kost/views/dashboards/login">
+                                            <i class="fas fa-sign-in-alt"></i> 
+                                            Login
+                                        </a>
+                                    </li>
+                                    <li></li>
                                 </ul>
+                                <a class="menu-trigger">
+                                    <span>Menu</span>
+                                </a>
                                 <!-- menu end -->
                             </nav>
                         </div>
@@ -332,7 +353,7 @@
                                                     </p>
 
                                                     <div class="icon-button">
-                                                        <a href="property-details.html"><i class="fa fa-calendar"></i> Schedule a visit</a>
+                                                        <a href="/kost/views/dashboards/login"><i class="fa fa-calendar"></i> Schedule a visit</a>
                                                     </div>
 
                                                 </div>

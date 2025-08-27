@@ -23,28 +23,36 @@
 
                             <thead>
                                 <tr align="center">
+
                                     <th>No</th>
                                     <th>Id Fasilitas</th>
                                     <th>Nama Fasilitas</th>
-                                    <th>Deskripsi</th>
+                                    <th style="width: 30%;">Deskripsi</th>
                                     <th>Harga</th>
                                     <th style="width: 10%;">Action</th>
+
                                 </tr>
                             </thead>
 
                             <tbody>
+
                                 <?php 
-                                    $fasilitas = $mysqli->query("SELECT * FROM fasilitas ORDER BY kode_fasilitas, nama_fasilitas ASC");
+                                    $fasilitas = $mysqli->query("SELECT * FROM fasilitas where deleted != 1 ORDER BY kode_fasilitas, nama_fasilitas ASC");
 
                                     $no = 0;
                                     while ($data = mysqli_fetch_array($fasilitas)) {
                                         $no++;
                                 ?>
                                     <tr align="center">
+
                                         <td><?= $no; ?></td>
+
                                         <td><?= $data['kode_fasilitas']; ?></td>
+
                                         <td><?= $data['nama_fasilitas']; ?></td>
+
                                         <td><?= $data['deskripsi']; ?></td>
+
                                         <td>
                                             <?php 
                                                 if ($data['harga'] > 0) {
@@ -54,14 +62,19 @@
                                                 }
                                             ?>
                                         </td>
-                                        <td>
-                                            <button class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#edit<?= $data['id_fasilitas']; ?>">
+
+                                        <td align="center">
+
+                                            <button class="btn btn-link btn-primary btn-lg" data-bs-toggle="modal" data-bs-target="#edit-<?= $data['id_fasilitas']; ?>">
                                                 <i class="fas fa-edit"></i>
                                             </button>
-                                            <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#delete<?= $data['id_fasilitas']; ?>">
+
+                                            <button class="btn btn-link btn-danger btn-lg" onclick="deleteFasilitas(<?= $data['id_fasilitas']; ?>)">
                                                 <i class="fas fa-trash"></i>
                                             </button>
+
                                         </td>
+
                                     </tr>
                                 <?php
                                     }
@@ -164,7 +177,7 @@
                         <div class="col-sm-12">
                             <div class="form-group">
 
-                                <label for="deskripsi_fasilitas">Deskripsi Fasilitas <span class="text-danger">*</span></label>
+                                <label for="deskripsi">Deskripsi Fasilitas <span class="text-danger">*</span></label>
 
                                 <div class="input-group">
 
@@ -172,7 +185,7 @@
                                         <i class="fas fa-list"></i>
                                     </span>
 
-                                    <textarea name="deskripsi_fasilitas" id="deskripsi_fasilitas" class="form-control" placeholder="Masukan deskripsi fasilitas" required rows="3" style="resize: none;"></textarea>
+                                    <textarea name="deskripsi" id="deskripsi" class="form-control" placeholder="Masukan deskripsi fasilitas" required rows="3" style="resize: none;"></textarea>
 
                                 </div>
 
@@ -204,7 +217,10 @@
                 <div class="modal-header">
                     <h5 class="modal-title">
                         <span class="fw-mediumbold">Edit</span>
-                        <span class="fw-light"><?= $p, $ef['nama_fasilitas']?></span>
+                        <span class="fw-light">
+                            <?= $p?>
+                            <?= $ef['nama_fasilitas'] ?>
+                        </span>
                     </h5>
                     <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>

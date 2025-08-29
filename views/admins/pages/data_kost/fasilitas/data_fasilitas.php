@@ -186,6 +186,45 @@
                             </div>
                         </div>
 
+                        <div class="col-md-6 pe-0">
+                            <div class="form-group">
+
+                                <label for="stok">Stok Fasilitas <span class="text-danger">*</span></label>
+
+                                <div class="input-group">
+
+                                    <span class="input-group-text">
+                                        <i class="fas fa-box"></i>
+                                    </span>
+
+                                    <input type="number" name="stok" id="stok" class="form-control" placeholder="Masukan stok fasilitas" required>
+
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-control">
+
+                                <label for="foto">
+                                    Foto Fasilitas
+                                    <span class="text-danger">*</span>
+                                </label>
+
+                                <div class="input-group">
+
+                                    <span class="input-group-text">
+                                        <i class="fas fa-camera"></i>
+                                    </span>
+
+                                    <input type="file" name="foto" id="foto" class="form-control" accept=".jpg, .jpeg, .png">
+
+                                </div>
+
+                            </div>
+                        </div>
+
                         <div class="col-sm-12">
                             <div class="form-group">
 

@@ -10,14 +10,44 @@
                 $_POST['kode_fasilitas'],
                 $_POST['nama_fasilitas'],
                 $_POST['deskripsi'],
-                $_POST['harga']
+                $_POST['harga'],
+                $_POST['stok']
             )) {
                 $kode_fasilitas = $_POST['kode_fasilitas'];
                 $nama_fasilitas = $_POST['nama_fasilitas'];
                 $deskripsi = $_POST['deskripsi'];
                 $harga = $_POST['harga'];
+                $stok = $_POST['stok'];
 
                 $sl_fasilitas = bin2hex(random_bytes(32));
+
+                $fotoDir = "../../../../../assets/uploads/fasilitas/";
+
+                function uploadFile($file, $targetDir, $allowedExt = []) {
+                    if ($file['error'] === 0) {
+
+                        $ext = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
+
+                        if (!empty($allowedExt) && !in_array($ext, $allowedExt)) {
+                            return null;
+                        }
+
+                        $randomName = uniqid('fasilitas_', true) . '.' . $ext;
+                        $destination = $targetDir . $randomName;
+
+                        if (!is_dir($targetDir)) {
+                            mkdir($targetDir, 0755, true);
+                        }
+
+                        if (move_uploaded_file($file['tmp_name'], $destination)) {
+                            return $randomName;
+                        }
+
+                    }
+                    return null;
+                }
+
+                $foto = isset($_FILES['foto']) ? uploadFile($_FILES['foto'], $fotoDir, ['jpg','jpeg','png']) : null;
 
                 $stmt_cek = $mysqli->prepare("SELECT COUNT(*) FROM fasilitas WHERE kode_fasilitas = ? ");
                 $stmt_cek->bind_param("s", $kode_fasilitas);
@@ -32,9 +62,12 @@
                         'title' => 'Oops...',
                         'text' => 'Kode fasilitas sudah dipakai!'
                     ];
+                    header("Location: ../../../index?fasilitas=data_fasilitas");
+                    exit;
+
                 } else {
-                    $stmt = $mysqli->prepare("INSERT INTO fasilitas (kode_fasilitas, nama_fasilitas, deskripsi, harga, sl_fasilitas) VALUES (?,?,?,?,?) ");
-                    $stmt->bind_param("sssis", $kode_fasilitas, $nama_fasilitas, $deskripsi, $harga, $sl_fasilitas);
+                    $stmt = $mysqli->prepare("INSERT INTO fasilitas (kode_fasilitas, nama_fasilitas, deskripsi, harga, stok, foto, sl_fasilitas) VALUES (?,?,?,?,?,?,?) ");
+                    $stmt->bind_param("ssssiss", $kode_fasilitas, $nama_fasilitas, $deskripsi, $harga, $stok, $foto, $sl_fasilitas);
 
                     if ($stmt->execute()) {
                         $_SESSION['alert'] = [

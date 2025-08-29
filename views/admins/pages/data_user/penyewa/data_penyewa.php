@@ -64,7 +64,7 @@
                                                 <i class="far fa-eye"></i>
                                             </a>
 
-                                            <a href="?penyewa=pemesanan_user&id_user=<?= $data['id_user'] ?>" class="btn btn-link btn-success btn-lg">
+                                            <a href="?penyewa=pemesanan_user&id_user=<?= $data['sl_user'] ?>" class="btn btn-link btn-success btn-lg">
                                                 <i class="fas fa-clipboard-list"></i>
                                             </a>
 

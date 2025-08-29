@@ -25,9 +25,11 @@
                                 <tr align="center">
 
                                     <th>No</th>
-                                    <th>Id Fasilitas</th>
-                                    <th>Nama Fasilitas</th>
-                                    <th style="width: 30%;">Deskripsi</th>
+                                    <th>Kode</th>
+                                    <th>Nama</th>
+                                    <th>Deskripsi</th>
+                                    <th>Stok</th>
+                                    <th>Foto</th>
                                     <th>Harga</th>
                                     <th style="width: 10%;">Action</th>
 
@@ -37,7 +39,7 @@
                             <tbody>
 
                                 <?php 
-                                    $fasilitas = $mysqli->query("SELECT * FROM fasilitas where deleted != 1 ORDER BY kode_fasilitas, nama_fasilitas ASC");
+                                    $fasilitas = $mysqli->query("SELECT * FROM fasilitas where deleted != 1 ORDER BY kode_fasilitas asc");
 
                                     $no = 0;
                                     while ($data = mysqli_fetch_array($fasilitas)) {
@@ -53,10 +55,18 @@
 
                                         <td><?= $data['deskripsi']; ?></td>
 
+                                        <td><?= $data['stok']; ?></td>
+
+                                        <td>
+                                            <div class="avatar avatar-xxl">
+                                                <img src="/kost/assets/uploads/fasilitas/<?= $data['foto']; ?>" alt="Foto fasilitas" class="avatar-img rounded">
+                                            </div>
+                                        </td>
+
                                         <td>
                                             <?php 
-                                                if ($data['harga'] > 0) {
-                                                    echo "Rp " . number_format($data['harga'], 0, ',', '.');
+                                                if ($data['harga'] >= 500) {
+                                                    echo "Rp " . number_format($data['harga'], 2, ',', '.');
                                                 } else {
                                                     echo "Gratis";
                                                 }
@@ -84,9 +94,11 @@
                             <tfoot>
                                 <tr align="center">
                                     <th>No</th>
-                                    <th>Id Fasilitas</th>
-                                    <th>Nama Fasilitas</th>
+                                    <th>Kode</th>
+                                    <th>Nama</th>
                                     <th>Deskripsi</th>
+                                    <th>Stok</th>
+                                    <th>Foto</th>
                                     <th>Harga</th>
                                     <th style="width: 10%;">Action</th>
                                 </tr>
@@ -227,7 +239,131 @@
                     </button>
                 </div>
 
-                <div class="modal-body"></div>
+                <div class="modal-body">
+                    <form action="settings/functions/edit/edit_fasilitas" method="post" enctype="multipart/form-data">
+                        <div class="row">
+
+                            <input type="hidden" class="form-control" id="id_fasilitas" name="id_fasilitas" value="<?= $ef['id_fasilitas']; ?>" readonly>
+
+                            <div class="col-sm-12">
+                                <div class="form-group">
+
+                                    <label for="nama_fasilitas">Nama Fasilitas <span class="text-danger">*</span></label>
+
+                                    <div class="input-group">
+
+                                        <span class="input-group-text">
+                                            <i class="fas fa-pen"></i>
+                                        </span>
+
+                                        <input type="text" name="nama_fasilitas" id="nama_fasilitas" class="form-control" value="<?= $ef['nama_fasilitas'] ?>" placeholder="Masukan nama fasilitas" required>
+
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 pe-0">
+                                <div class="form-group">
+
+                                    <label for="kode_fasilitas">Kode Fasilitas <span class="text-danger">*</span></label>
+
+                                    <div class="input-group">
+
+                                        <span class="input-group-text">
+                                            <i class="fas fa-key"></i>
+                                        </span>
+
+                                        <input type="text" name="kode_fasilitas" id="kode_fasilitas" class="form-control" value="<?= $ef['kode_fasilitas'] ?>" placeholder="Masukan kode fasilitas" required>
+
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+
+                                    <label for="harga">Harga Fasilitas <span class="text-danger">*</span></label>
+
+                                    <div class="input-group">
+
+                                        <span class="input-group-text">
+                                            <i class="fas fa-tag"></i>
+                                        </span>
+
+                                        <input type="number" name="harga" id="harga" class="form-control" value="<?= $ef['harga'] ?>" placeholder="Masukan harga fasilitas" required>
+
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 pe-0">
+                                <div class="form-group">
+
+                                    <label for="stok">Stok Fasilitas <span class="text-danger">*</span></label>
+
+                                    <div class="input-group">
+
+                                        <span class="input-group-text">
+                                            <i class="fas fa-box"></i>
+                                        </span>
+
+                                        <input type="number" name="stok" id="stok" class="form-control" value="<?= $ef['stok'] ?>" placeholder="Masukan stok fasilitas" required>
+
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-control">
+
+                                    <label for="foto">
+                                        Foto Fasilitas
+                                        <span class="text-danger">*</span>
+                                    </label>
+
+                                    <div class="input-group">
+
+                                        <span class="input-group-text">
+                                            <i class="fas fa-camera"></i>
+                                        </span>
+
+                                        <input type="file" name="foto" id="foto" class="form-control" accept=".jpg, .jpeg, .png">
+
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="col-sm-12">
+                                <div class="form-group">
+
+                                    <label for="deskripsi">Deskripsi Fasilitas <span class="text-danger">*</span></label>
+
+                                    <div class="input-group">
+
+                                        <span class="input-group-text">
+                                            <i class="fas fa-list"></i>
+                                        </span>
+
+                                        <textarea name="deskripsi" id="deskripsi" class="form-control" placeholder="Masukan deskripsi fasilitas" required rows="3" style="resize: none;"><?= $ef['deskripsi'] ?></textarea>
+
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="modal-footer">
+                                <input type="reset" value="Reset" class="btn btn-border btn-round btn-primary float-right">
+                                <input type="submit" value="Submit" class="btn btn-border btn-round btn-success float-right">
+                            </div>
+
+                        </div>
+                    </form>
+                </div>
 
             </div>
         </div>

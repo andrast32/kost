@@ -11,7 +11,7 @@
             && isset($_POST['username'])
             && isset($_POST['nama_user'])) {
 
-                $id_user            = $_POST['id_user'];
+                $id_user            = intval($_POST['id_user']);
                 $username           = $_POST['username'];
                 $nama_user          = $_POST['nama_user'];
 

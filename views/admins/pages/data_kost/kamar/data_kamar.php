@@ -24,7 +24,7 @@
                             <thead>
                                 <tr align="center">
                                     <th>No</th>
-                                    <th>Id Kamar</th>
+                                    <th>Kode</th>
                                     <th>Harga</th>
                                     <th>Status</th>
                                     <th>Khusus</th>
@@ -78,7 +78,7 @@
                             <tfoot>
                                 <tr align="center">
                                     <th>No</th>
-                                    <th>Id Kamar</th>
+                                    <th>Kode</th>
                                     <th>Harga</th>
                                     <th>Status</th>
                                     <th>Khusus</th>

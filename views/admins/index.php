@@ -81,13 +81,13 @@
             'h1'        => 'Biodata Penyewa',
             'p'         => 'Biodata',
         ],
-        'pesan/pemesanan_user' => [
+        'pemesanan_user' => [
             'title'     => 'The Kost | Pemesanan Penyewa',
             'breadcumb' => 'Data User | Data Penyewa | Pemesanan',
             'h1'        => 'Pemesanan Penyewa',
             'p'         => 'Pemesanan',
         ],
-        'pesan/pemesanan_user' => [
+        'pemesanan_user' => [
             'title'     => 'The Kost | Pemesanan Penyewa',
             'breadcumb' => 'Data User | Data Penyewa | Pemesanan',
             'h1'        => 'Pemesanan Penyewa',

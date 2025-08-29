@@ -28,12 +28,16 @@ CREATE TABLE `fasilitas` (
   `nama_fasilitas` varchar(100) NOT NULL,
   `deskripsi` text NOT NULL,
   `harga` decimal(12,2) NOT NULL DEFAULT '0.00',
+  `stok` int NOT NULL DEFAULT '1',
+  `foto` text,
   `sl_fasilitas` text NOT NULL,
   `deleted` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id_fasilitas`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-INSERT INTO `fasilitas` VALUES("1","F-1","meja belajar","Meja Belajar ukuran 1x1 dengan laci, dan tempat menyimpan pc","10000.00","0b85cc5b59e16e9c8a3cae2e2f7250ea6ed4b69e51f20200c04c8d75a0d289d6","0");
+INSERT INTO `fasilitas` VALUES("1","F1","meja belajar","Meja Belajar ukuran 1x1 dengan laci, dan tempat menyimpan pc","5000.00","0","","8201ac3a3a9fa6a0c6b13dc67b47c4a625a24a7fe9d4251fd60dee905b853ff9","0");
+INSERT INTO `fasilitas` VALUES("2","F2","kursi","kursi plastik warna biru","1000.00","1","fasilitas_68b0e03c2e0b23.56128341.png","227222a3a16c62ef5697a130d8de864e082ff997ce59b944c6f9d2418b875ea4","0");
+INSERT INTO `fasilitas` VALUES("3","G1","lemari","lemari baju","30000.00","1","","3d9c10c4c32887637b9cc678a3f5ae473f438375153741a401661c76f74ea307","0");
 
 
 DROP TABLE IF EXISTS `kamar`;
@@ -73,7 +77,8 @@ DROP TABLE IF EXISTS `pemesanan`;
 CREATE TABLE `pemesanan` (
   `id_pemesanan` bigint NOT NULL AUTO_INCREMENT,
   `id_user` bigint NOT NULL,
-  `id_kamar` bigint NOT NULL,
+  `id_kamar` bigint DEFAULT NULL,
+  `id_fasilitas` bigint DEFAULT NULL,
   `tanggal_pesan` date NOT NULL,
   `tanggal_masuk` date DEFAULT NULL,
   `durasi` int NOT NULL COMMENT 'Dalam bulan',
@@ -82,21 +87,10 @@ CREATE TABLE `pemesanan` (
   PRIMARY KEY (`id_pemesanan`),
   KEY `id_user` (`id_user`),
   KEY `id_kamar` (`id_kamar`),
-  CONSTRAINT `pemesanan_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `user` (`id_user`),
-  CONSTRAINT `pemesanan_ibfk_2` FOREIGN KEY (`id_kamar`) REFERENCES `kamar` (`id_kamar`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
-
-
-DROP TABLE IF EXISTS `pemesanan_fasilitas`;
-CREATE TABLE `pemesanan_fasilitas` (
-  `id_pemesanan` bigint NOT NULL,
-  `id_fasilitas` bigint NOT NULL,
-  `harga_saat_pesan` decimal(12,2) NOT NULL,
-  PRIMARY KEY (`id_pemesanan`,`id_fasilitas`),
   KEY `id_fasilitas` (`id_fasilitas`),
-  CONSTRAINT `pemesanan_fasilitas_ibfk_1` FOREIGN KEY (`id_pemesanan`) REFERENCES `pemesanan` (`id_pemesanan`) ON DELETE CASCADE,
-  CONSTRAINT `pemesanan_fasilitas_ibfk_2` FOREIGN KEY (`id_fasilitas`) REFERENCES `fasilitas` (`id_fasilitas`) ON DELETE CASCADE
+  CONSTRAINT `pemesanan_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `user` (`id_user`),
+  CONSTRAINT `pemesanan_ibfk_2` FOREIGN KEY (`id_kamar`) REFERENCES `kamar` (`id_kamar`),
+  CONSTRAINT `pemesanan_ibfk_3` FOREIGN KEY (`id_fasilitas`) REFERENCES `fasilitas` (`id_fasilitas`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 
@@ -114,7 +108,7 @@ CREATE TABLE `user` (
   PRIMARY KEY (`id_user`)
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
-INSERT INTO `user` VALUES("1","andra@admin.com","$2y$10$IQANylhjmFDqKPmmGwUtkuA40w.n91iLCDnGoGYdJa9xfi4J1psae","Andra Setiawan","Admin","0","5ebbf23d0324799902e6ef4c26427b75bf3df13bb05eb938a27de2c9f3981636","3fb8b228d612d4ad9ec5ddbd1b5f76b19787d729b05fbea337df58df28f14046");
+INSERT INTO `user` VALUES("1","andra@admin.com","$2y$10$IQANylhjmFDqKPmmGwUtkuA40w.n91iLCDnGoGYdJa9xfi4J1psae","Andra Setiawan","Admin","0","fe1076e8a404cee487ba9869f91e9f1d0105f9fe8a5e6d1f3dea76285253503b","3fb8b228d612d4ad9ec5ddbd1b5f76b19787d729b05fbea337df58df28f14046");
 INSERT INTO `user` VALUES("2","antasena@admin.com","$2y$10$GoLDjlkH4lHkhmENbJdR2OZhc9uD429nNvhvCX8QIqXQnjHyq98Pu","Antasena","Admin","0","","7a02508f87efb8529fd2233fa7318bb4ef6d83a2f94a6d4f73420add8bde5502");
 INSERT INTO `user` VALUES("3","viona@kost.com","$2y$10$AauCI.lrzTrfuLMb2vCgL.sPp9WZSZWyAAwTVUs/WQFz68.OjX2v2","Viona","User","0","","2c9710262340c61e435dea4a3a010f31c30b79c0286f47d1661477a136226c65");
 INSERT INTO `user` VALUES("4","indra@admin.com","$2y$10$POEkUANjULOZCOjlwyCP9uNyWwBcgBKAfhOZpNuqj2jWHxBYuR4Ry","Nurindra Setiawan","Admin","0","","2e640f53cd90e5ebe796cb6a715a6b94551af61f27b3f09696fca55ce5031c4c");

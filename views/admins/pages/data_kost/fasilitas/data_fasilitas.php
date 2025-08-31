@@ -14,6 +14,22 @@
                             <i class="fas fa-plus"></i> Add <?= $p; ?>
                         </button>
 
+                        <?php 
+                            $fasilitas = $mysqli->query("SELECT deleted FROM fasilitas WHERE deleted = 1");
+                            while ($sp = mysqli_fetch_array($fasilitas)) {
+
+                                if ( $sp['deleted'] == 1) :
+                                    ?>
+
+                                    <a href="?fasilitas=deleted_fasilitas" class="btn btn-round btn-danger btn-border">
+                                        <i class="fas fa-trash"></i> Lihat sampah
+                                    </a>
+
+                                    <?php 
+                                endif; 
+                            } 
+                        ?>
+
                     </div>
                 </div>
 
@@ -260,7 +276,7 @@
 <?php
     $fasilitas = $mysqli->query("SELECT * FROM fasilitas WHERE id_fasilitas");
     while ($ef = mysqli_fetch_array($fasilitas)) {
-?>
+    ?>
     <div class="modal fade" id="edit-<?= $ef['id_fasilitas']; ?>" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -409,3 +425,22 @@
     </div>
 
 <?php } ?>
+
+<script>
+    function deleteFasilitas(id_fasilitas) {
+        Swal.fire({
+            title: 'Yakin mau hapus?',
+            text: "Data ini akan dihapus!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#e74c3c',
+            cancelButtonColor: '#6c757d',
+            confirmButtonText: 'Ya, hapus!',
+            cancelButtonText: 'Batal'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = 'settings/functions/delete/soft/sft_fasilitas?id_fasilitas=' + id_fasilitas;
+            }
+        })
+    }
+</script>

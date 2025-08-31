@@ -33,6 +33,12 @@
             'h1'        => 'Data Fasilitas',
             'p'         => 'Fasilitas',
         ],
+        'deleted_fasilitas' => [
+            'title'     => 'The Kost | Deleted Fasilitas',
+            'breadcumb' => 'Data Kost | Data Fasilitas | Deleted Fasilitas',
+            'h1'        => 'Deleted Data Fasilitas',
+            'p'         => ''
+        ],
         'data_penyewa' => [
             'title'     => 'The Kost | Data Penyewa',
             'breadcumb' => 'Data User | Data Penyewa',

@@ -30,7 +30,8 @@
             'submenu_id'    => 'dakost',
             'active'        => in_array($page, [
                 'data_kamar', 
-                'data_fasilitas'
+                'data_fasilitas',
+                'deleted_fasilitas'
             ]),
             'submenus'      => [
                 [
@@ -41,7 +42,10 @@
                 [
                     'label'     => 'Data Fasilitas',
                     'link'      => '?fasilitas=data_fasilitas',
-                    'active'    => $page === 'data_fasilitas',
+                    'active'    => in_array($page, [
+                        'data_fasilitas',
+                        'deleted_fasilitas'
+                    ])
                 ],
             ]
         ],

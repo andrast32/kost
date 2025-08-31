@@ -1,3 +1,20 @@
+<?php
+
+    $all_admins_result = $mysqli->query("SELECT * FROM user WHERE role = 'Admin' ORDER BY id_user ASC");
+
+    $active_admins = [];
+    $has_deleted_users = false;
+
+    while ($admin = $all_admins_result->fetch_assoc()) {
+        if ($admin['deleted'] != 1) {
+            $active_admins[] = $admin;
+        } else {
+            $has_deleted_users = true;
+        }
+    }
+
+?>
+
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-12">
@@ -6,40 +23,39 @@
                 <div class="card-header">
                     <div class="d-flex align-items-center">
 
-                        <h4 class="card-title">
-                            <?= $h1; ?>
-                        </h4>
+                        <h2 class="card-title">
+                            <?= htmlspecialchars($h1) ?>
+                        </h2>
 
-                        <button class="btn btn-border btn-round btn-primary ms-auto" style="margin-right: 0.5rem;" data-bs-toggle="modal" data-bs-target="#add">
-                                <i class="fas fa-plus"></i> Add <?= $p;?>
+                        <button 
+                            class="btn btn-border btn-round btn-primary ms-auto" 
+                            style="margin: 0 0.5rem;"
+                            data-bs-toggle="modal"
+                            data-bs-target="#add">
+                                <i class="fas fa-plus"></i>
+                                tambah <?= htmlspecialchars($p) ?>
                         </button>
 
                         <?php
-                            $user = $mysqli->query("SELECT deleted FROM user WHERE role = 'Admin'");
-                            while ($sa = mysqli_fetch_array($user)) {
-
-                                if ( $sa['deleted'] == 1) :
-                                    ?>
-
-                                    <a href="?petugas=deleted_petugas" class="btn btn-round btn-danger btn-border">
-                                        <i class="fas fa-trash"></i> Lihat sampah
-                                    </a>
-
-                                    <?php 
-                                endif; 
-                            } 
+                            if ($has_deleted_users) :
                         ?>
+
+                            <a href="?petugas=deleted_petugas" class="btn btn-round btn-danger btn-border">
+                                <i class="fas fa-trash"></i> Lihat sampah
+                            </a>
+
+                        <?php endif; ?>
 
                     </div>
                 </div>
 
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table id="laporan" class="display table table-striped table-hover">
+                        <table id="laporan" class="display table table-striped table-hoover">
 
                             <thead>
                                 <tr align="center">
-                                    <th>No</th>
+                                    <th style="width: 10%;">No</th>
                                     <th>Nama</th>
                                     <th>Username</th>
                                     <th style="width: 10%;">Action</th>
@@ -48,37 +64,53 @@
 
                             <tbody>
                                 <?php
-                                    $user = $mysqli->query("SELECT * FROM user WHERE deleted != 1 AND role = 'Admin' ORDER BY id_user ASC");
 
                                     $no = 0;
-                                    while ($data = mysqli_fetch_array($user)) {
+                                    foreach ($active_admins as $data) {
                                         $no++;
+                                        ?>
+                                            <tr>
+
+                                                <td align="center"><?= $no ?></td>
+
+                                                <td><?= htmlspecialchars($data['nama_user']) ?></td>
+
+                                                <td><?= htmlspecialchars($data['username']) ?></td>
+
+                                                <td align="center">
+
+                                                    <button 
+                                                        type="button"
+                                                        class="btn btn-link btn-primary btn-lg edit-btn"
+                                                        data-bs-toggle="modal"
+                                                        data-bs-target="#edit"
+                                                        data-id="<?= $data['id_user'] ?>"
+                                                        data-username="<?= htmlspecialchars($data['username']) ?>"
+                                                        data-nama="<?= htmlspecialchars($data['nama_user']) ?>">
+                                                            <i class="fas fa-edit"></i>
+                                                    </button>
+
+                                                    <button
+                                                        class="btn btn-link btn-danger btn-lg"
+                                                        onclick="deleteUser(<?= $data['id_user']?>)">
+                                                        <i class="fas fa-trash"></i>
+                                                    </button>
+
+                                                </td>
+
+                                            </tr>
+                                        <?php 
+                                    }
+
                                 ?>
-                                    <tr>
-                                        <td align="center"><?= $no; ?></td>
-                                        <td><?= $data['nama_user']; ?></td>
-                                        <td><?= $data['username']; ?></td>
-                                        <td align="center">
-
-                                            <button type="button" class="btn btn-link btn-primary btn-lg" data-bs-toggle="modal" data-bs-target="#edit-<?= $data['id_user']?>">
-                                                <i class="fas fa-edit"></i>
-                                            </button>
-
-                                            <button class="btn btn-link btn-danger" onclick="deleteUser(<?= $data['id_user']?>)">
-                                                <i class="fas fa-trash"></i>
-                                            </button>
-
-                                        </td>
-                                    </tr>
-                                <?php }  ?>
                             </tbody>
 
                             <tfoot>
                                 <tr align="center">
-                                    <th>No</th>
+                                    <th style="width: 10%;">No</th>
                                     <th>Nama</th>
                                     <th>Username</th>
-                                    <th>Action</th>
+                                    <th style="width: 10%;">Action</th>
                                 </tr>
                             </tfoot>
 
@@ -97,13 +129,16 @@
         <div class="modal-content">
 
             <div class="modal-header">
+
                 <h5 class="modal-title">
                     <span class="fw-mediumbold">Add</span>
                     <span class="fw-light"> <?= $p?></span>
                 </h5>
+
                 <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
+                
             </div>
 
             <div class="modal-body">
@@ -188,95 +223,21 @@
 </div>
 
 <!-- modal edit -->
-<?php
-    $user = $mysqli->query("SELECT * FROM user WHERE id_user");
-    while ($ea = mysqli_fetch_array($user)) {
-    ?>
-    <div class="modal fade" id="edit-<?= $ea['id_user']?>" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
+<div class="modal fade" id="edit" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="docuument">
+        <div class="modal-content">
+            <div class="modal-header">
 
-                <div class="modal-header">
-                    <h5 class="modal-title">
-                        <span class="fw-mediumbold">Edit</span>
-                        <span class="fw-light"> <?= $p?></span>
-                    </h5>
-                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
+                <h5 class="modal-title">
+                    <span class="fw-mediumbold">Edit</span>
+                    <span class="fw-light"> <?= htmlspecialchars($p) ?></span>
+                </h5>
 
-                <div class="modal-body">
-                    <form action="settings/functions/edit/edit_petugas" method="post" enctype="multipart/form-data">
-                        <div class="row">
-
-                            <div class="col-sm-12">
-                                <div class="form-group">
-
-                                    <input type="hidden" name="id_user" id="id_user" value="<?= $ea['id_user']?>" class="form-control" readonly>
-
-                                    <label for="Username">Username <span class="text-danger">*</span></label>
-
-                                    <div class="input-group">
-
-                                        <span class="input-group-text">
-                                            <i class="fas fa-at"></i>
-                                        </span>
-
-                                        <input type="text" name="username" id="username" class="form-control" placeholder="Masukan username" value="<?= $ea['username']?>" required>
-
-                                    </div>
-
-                                </div>
-                            </div>
-
-                            <div class="col-sm-12">
-                                <div class="form-group">
-
-                                    <label for="nama">Nama</label>
-
-                                    <div class="input-group">
-
-                                        <span class="input-group-text">
-                                            <i class="fas fa-user"></i>
-                                        </span>
-
-                                        <input type="text" name="nama_user" id="nama_user" class="form-control" placeholder="Masukan nama" value="<?= $ea['nama_user']?>" required>
-
-                                    </div>
-
-                                </div>
-                            </div>
-
-                            <div class="modal-footer">
-                                <input type="reset" value="Reset" class="btn btn-border btn-round btn-primary float-right">
-                                <input type="submit" value="Submit" class="btn btn-border btn-round btn-success float-right">
-                            </div>
-
-                        </div>
-                    </form>
-                </div>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
 
             </div>
         </div>
     </div>
-<?php  } ?>
-
-<script>
-    function deleteUser(id_user) {
-        Swal.fire({
-            title: 'Yakin mau hapus?',
-            text: "Data ini akan dihapus!",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#e74c3c',
-            cancelButtonColor: '#6c757d',
-            confirmButtonText: 'Ya, hapus!',
-            cancelButtonText: 'Batal'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                window.location.href = "settings/functions/delete/soft/sft_petugas?id=" + id_user;
-            }
-        });
-    }
-</script>
+</div>

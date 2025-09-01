@@ -257,7 +257,43 @@
                                     <span class="text-danger">*</span>
                                 </label>
 
+                                <div class="input-group">
+
+                                    <span class="input-group-text">
+                                        <i class="fas fa-at"></i>
+                                    </span>
+
+                                    <input type="text" name="username" id="edit_username" class="form-control" placeholder="Masukan username" required>
+
+                                </div>
+
                             </div>
+                        </div>
+
+                        <div class="col-sm-12">
+                            <div class="form-group">
+
+                                <label for="nama">
+                                    Nama User
+                                    <span class="text-danger">*</span>
+                                </label>
+
+                                <div class="input-group">
+
+                                    <span class="input-group-text">
+                                        <i class="fas fa-at"></i>
+                                    </span>
+
+                                    <input type="text" name="nama_user" id="edit_nama_user" class="form-control" placeholder="Masukan nama_user" required>
+
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="modal-footer">
+                            <input type="reset" value="Reset" class="btn btn-border btn-round btn-primary float-right">
+                            <input type="submit" value="Submit" class="btn btn-border btn-round btn-success float-right">
                         </div>
 
                     </div>

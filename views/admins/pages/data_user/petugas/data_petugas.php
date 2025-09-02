@@ -92,8 +92,11 @@
 
                                                     <button
                                                         class="btn btn-link btn-danger btn-lg"
-                                                        onclick="deleteUser(<?= $data['id_user']?>)">
-                                                        <i class="fas fa-trash"></i>
+                                                        onclick="deleteUser(
+                                                        <?= $data['id_user']?>,
+                                                        '<?= htmlspecialchars($data['nama_user']) ?>'
+                                                        )">
+                                                            <i class="fas fa-trash"></i>
                                                     </button>
 
                                                 </td>
@@ -226,6 +229,7 @@
 <div class="modal fade" id="edit" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog" role="docuument">
         <div class="modal-content">
+
             <div class="modal-header">
 
                 <h5 class="modal-title">
@@ -238,6 +242,54 @@
                 </button>
 
             </div>
+
+            <div class="modal-body">
+                <form action="settings/functions/edit/edit_petugas" method="post">
+                    <div class="row">
+
+                        <input type="text" name="id_user" id="edit_id_user">
+
+                    </div>
+                </form>
+            </div>
+
         </div>
     </div>
 </div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+        const editModal = document.getElementById('edit');
+        editModal.addEventListener('show.bs.modal', function(event){
+            const button = event.relatedTarget;
+
+            const id = button.getAttribute('data-id');
+            const username = button.getAttribute('data-username');
+            const nama = button.getAttribute('data-nama');
+
+            const modalForm = editModal.querySelector('form');
+            modalForm.querySelector('#edit_id_user').value = id;
+            modalForm.querySelector('#edit_username').value = username;
+            modalForm.querySelector('#edit_nama_user').value = nama;
+
+        });
+    });
+
+    function deleteUser(id_user, nama_user) {
+        Swal.fire({
+                title: 'Yakin mau hapus <?= htmlspecialchars($p)?>?',
+                text: "Data " + nama_user + " akan dihapus!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#e74c3c',
+                cancelButtonColor: '#6c757d',
+                confirmButtonText: 'Ya, hapus!',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = "settings/functions/delete/soft/sft_petugas?id=" + id_user;
+                }
+            });
+    }
+
+</script>

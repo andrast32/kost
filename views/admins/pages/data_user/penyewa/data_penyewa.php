@@ -98,7 +98,10 @@
                                                         <i class="fas fa-edit"></i>
                                                 </button>
 
-                                                <button class="btn btn-link btn-danger btn-lg" onclick="deleteUser(<?= $data['id_user']?>)">
+                                                <button class="btn btn-link btn-danger btn-lg" onclick="deleteUser(
+                                                <?= $data['id_user']?>, 
+                                                '<?= htmlspecialchars($data['nama_user']) ?>'
+                                                )">
                                                     <i class="fas fa-trash"></i>
                                                 </button>
 
@@ -234,7 +237,9 @@
 
                 <h5 class="modal-title">
                     <span class="fw-mediumbold">Edit</span>
-                    <span class="fw-light"><?= htmlspecialchars($p) ?></span>
+                    <span class="fw-light">
+                        <?= htmlspecialchars($p) ?>
+                    </span>
                 </h5>
 
                 <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
@@ -274,7 +279,7 @@
                             <div class="form-group">
 
                                 <label for="nama">
-                                    Nama User
+                                    Nama
                                     <span class="text-danger">*</span>
                                 </label>
 
@@ -321,10 +326,10 @@
         });
     });
 
-    function deleteUser(id_user) {
+    function deleteUser(id_user, nama_user) {
         Swal.fire({
-                title: 'Yakin mau hapus?',
-                text: "Data ini akan dihapus!",
+                title: 'Yakin mau hapus <?= htmlspecialchars($p)?>?',
+                text: "Data " + nama_user + " akan dihapus!",
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#e74c3c',

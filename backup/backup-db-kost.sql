@@ -109,15 +109,16 @@ CREATE TABLE `user` (
   `session_token` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `sl_user` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   PRIMARY KEY (`id_user`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
-INSERT INTO `user` VALUES("1","andra@admin.com","$2y$10$IQANylhjmFDqKPmmGwUtkuA40w.n91iLCDnGoGYdJa9xfi4J1psae","Andra Setiawan","Admin","0","d27c459f6d58cec545fe89157a5ce5c662fe224ea6aaacdc74738e632f1020fb","3fb8b228d612d4ad9ec5ddbd1b5f76b19787d729b05fbea337df58df28f14046");
+INSERT INTO `user` VALUES("1","andra@admin.com","$2y$10$IQANylhjmFDqKPmmGwUtkuA40w.n91iLCDnGoGYdJa9xfi4J1psae","Andra Setiawan","Admin","0","1bfb6d37b6c8bd6c7d92c55fae332d380f2552c824cbfb166f89c32f4e93cb58","3fb8b228d612d4ad9ec5ddbd1b5f76b19787d729b05fbea337df58df28f14046");
 INSERT INTO `user` VALUES("2","antasena@admin.com","$2y$10$GoLDjlkH4lHkhmENbJdR2OZhc9uD429nNvhvCX8QIqXQnjHyq98Pu","Antasena","Admin","0","","7a02508f87efb8529fd2233fa7318bb4ef6d83a2f94a6d4f73420add8bde5502");
-INSERT INTO `user` VALUES("3","viona@kost.com","$2y$10$AauCI.lrzTrfuLMb2vCgL.sPp9WZSZWyAAwTVUs/WQFz68.OjX2v2","Viona","User","0","","2c9710262340c61e435dea4a3a010f31c30b79c0286f47d1661477a136226c65");
+INSERT INTO `user` VALUES("3","viona@kost.com","$2y$10$AauCI.lrzTrfuLMb2vCgL.sPp9WZSZWyAAwTVUs/WQFz68.OjX2v2","Natasya Viona","User","0","","0c24bcc4a1a75257a0d85dd3b00d777172f8397127424a6bee72433df91a0a31");
 INSERT INTO `user` VALUES("4","indra@admin.com","$2y$10$POEkUANjULOZCOjlwyCP9uNyWwBcgBKAfhOZpNuqj2jWHxBYuR4Ry","Nurindra Setiawan","Admin","0","","2e640f53cd90e5ebe796cb6a715a6b94551af61f27b3f09696fca55ce5031c4c");
 INSERT INTO `user` VALUES("5","nurul@kost.com","$2y$10$ALmeOAuSaD3pm3/0FU9sju4lqIE4nDdDZ71ULPgHtDpTFfADxJb1K","Nurul Maryam","User","0","","caffe24a470c5572d75c806efa59119babf325b0353dcfaff36f1901a5665a52");
 INSERT INTO `user` VALUES("6","percobaan@kost.com","$2y$10$ul5P9YxLzmtqix8JozBuNe83enemsRcy22LIWF6Io7oWY.UmofhBq","coba kost","User","0","","68f7213c847c99a64d482e53a868e82394f1b8d0244c46318ca7667e2303ac45");
 INSERT INTO `user` VALUES("9","asep@kost.com","$2y$10$gDgmG/Wdehev3jCOj9DaL.7pz8HHJXo6X9Q0vqf9t0NeNKMoAol8q","asep cahyadi","User","0","","32bd479a6c69ae81ac6b89319541d848cf9fce3b0662d37fd4a915e9ad0d5474");
+INSERT INTO `user` VALUES("10","kurnia@kost.com","$2y$10$qLGbRMVNobhmGDdOJ33eYu5Oz2MCVAgpTXWyWHOKDQ7S6ZcfH1osu","Kurnia","User","0","","204542cb6bac292aa03c84c24f8d60a37d70e0cfb2270bb69d857b5d5faf1aa0");
 
 
 SET FOREIGN_KEY_CHECKS = 1;

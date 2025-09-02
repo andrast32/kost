@@ -139,8 +139,8 @@
 
             <div class="modal-header">
                 <h5 class="modal-title">
-                    <span class="fw-mediumbold">Add</span>
-                    <span class="fw-light"> <?= $p?></span>
+                    <span class="fw-mediumbold">Tambah</span>
+                    <span class="fw-light"> <?= htmlspecialchars($h1) ?></span>
                 </h5>
                 <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
@@ -238,7 +238,7 @@
                 <h5 class="modal-title">
                     <span class="fw-mediumbold">Edit</span>
                     <span class="fw-light">
-                        <?= htmlspecialchars($p) ?>
+                        <?= htmlspecialchars($h1) ?>
                     </span>
                 </h5>
 
@@ -252,7 +252,7 @@
                 <form action="settings/functions/edit/edit_penyewa" method="post">
                     <div class="row">
 
-                        <input type="hidden" name="id_user" id="edit_id_user">
+                        <input type="hidden" name="id_user" id="edit_id_user" readonly class="form-control">
 
                         <div class="col-sm-12">
                             <div class="form-group">
@@ -286,7 +286,7 @@
                                 <div class="input-group">
 
                                     <span class="input-group-text">
-                                        <i class="fas fa-at"></i>
+                                        <i class="fas fa-user"></i>
                                     </span>
 
                                     <input type="text" name="nama_user" id="edit_nama_user" class="form-control" placeholder="Masukan nama_user" required>

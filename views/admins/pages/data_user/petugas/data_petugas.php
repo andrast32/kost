@@ -134,8 +134,8 @@
             <div class="modal-header">
 
                 <h5 class="modal-title">
-                    <span class="fw-mediumbold">Add</span>
-                    <span class="fw-light"> <?= $p?></span>
+                    <span class="fw-mediumbold">Tambah</span>
+                    <span class="fw-light"> <?= htmlspecialchars($h1) ?></span>
                 </h5>
 
                 <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
@@ -234,7 +234,7 @@
 
                 <h5 class="modal-title">
                     <span class="fw-mediumbold">Edit</span>
-                    <span class="fw-light"> <?= htmlspecialchars($p) ?></span>
+                    <span class="fw-light"> <?= htmlspecialchars($h1) ?></span>
                 </h5>
 
                 <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
@@ -247,7 +247,54 @@
                 <form action="settings/functions/edit/edit_petugas" method="post">
                     <div class="row">
 
-                        <input type="text" name="id_user" id="edit_id_user">
+                        <input type="hidden" readonly name="id_user" id="edit_id_user" class="form-control">
+
+                        <div class="col-sm-12">
+                            <div class="form-group">
+
+                                <label for="Username">
+                                    Username
+                                    <span class="text-danger">*</span>
+                                </label>
+
+                                <div class="input-group">
+
+                                    <span class="input-group-text">
+                                        <i class="fas fa-at"></i>
+                                    </span>
+
+                                    <input type="text" name="username" id="edit_username" class="form-control" placeholder="Masukan username" required>
+
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="col-sm-12">
+                            <div class="form-group">
+
+                                <label for="Nama">
+                                    Nama
+                                    <span class="text-danger">*</span>
+                                </label>
+
+                                <div class="input-group">
+
+                                    <span class="input-group-text">
+                                        <i class="fas fa-user"></i>
+                                    </span>
+
+                                    <input type="text" name="nama_user" id="edit_nama_user" class="form-control" placeholder="Masukan nama" required>
+
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="modal-footer">
+                            <input type="reset" value="Reset" class="btn btn-border btn-round btn-primary float-right">
+                            <input type="submit" value="Submit" class="btn btn-border btn-round btn-success float-right">
+                        </div>
 
                     </div>
                 </form>

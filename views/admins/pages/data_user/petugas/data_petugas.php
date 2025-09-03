@@ -93,8 +93,8 @@
                                                     <button
                                                         class="btn btn-link btn-danger btn-lg"
                                                         onclick="deleteUser(
-                                                        <?= $data['id_user']?>,
-                                                        '<?= htmlspecialchars($data['nama_user']) ?>'
+                                                            <?= $data['id_user']?>,
+                                                            '<?= htmlspecialchars($data['nama_user']) ?>'
                                                         )">
                                                             <i class="fas fa-trash"></i>
                                                     </button>

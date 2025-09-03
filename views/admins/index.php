@@ -72,8 +72,8 @@
         'deleted_penyewa' => [
             'title'     => 'The Kost | Deleted Penyewa',
             'breadcumb' => 'Data User | Data Penyewa | Deleted Penyewa',
-            'h1'        => 'Deleted Data Penyewa',
-            'p'         => ''
+            'h1'        => 'Data Penyewa Terhapus',
+            'p'         => 'Data Penyewa'
         ],
         'data_biodata' => [
             'title'     => 'The Kost | Biodata Penyewa',
@@ -102,8 +102,8 @@
         'deleted_petugas' => [
             'title'     => 'The Kost | Deleted Petugas',
             'breadcumb' => 'Data User | Data Petugas | Deleted Petugas',
-            'h1'        => 'Deleted Data Petugas',
-            'p'         => ''
+            'h1'        => 'Data Petugas Terhapus',
+            'p'         => 'Data Petugas'
         ],
     ];
 

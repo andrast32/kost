@@ -10,7 +10,6 @@
         if (isset($_POST['username'])
             && isset($_POST['password'])
             && isset($_POST['nama_user'])
-            && isset($_POST['nama_user'])
             && isset($_POST['role'])) {
 
                 $username = $_POST['username'];

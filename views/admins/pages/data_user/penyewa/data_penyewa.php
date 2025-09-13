@@ -1,11 +1,11 @@
 <?php
 
-    $all_users_result = $mysqli->query("SELECT * FROM user WHERE role = 'User' ORDER BY id_user ASC");
+    $data_users = $mysqli->query("SELECT * FROM user WHERE role = 'User' ORDER BY id_user ASC");
 
     $active_users = [];
     $has_deleted_users = false;
 
-    while ($user = $all_users_result->fetch_assoc()) {
+    while ($user = $data_users->fetch_assoc()) {
         if ($user['deleted'] != 1) {
             $active_users[] = $user;
         } else {

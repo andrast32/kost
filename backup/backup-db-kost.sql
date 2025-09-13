@@ -40,7 +40,7 @@ INSERT INTO `fasilitas` VALUES("2","F2","kursi","kursi plastik warna biru","1000
 INSERT INTO `fasilitas` VALUES("3","F3","lemari","lemari baju","30000.00","1","","2e50a32382b178d996578b848f7b57874ac1b5667c32c67b948e74d725027018","1");
 INSERT INTO `fasilitas` VALUES("4","F4","kasur lantai","Kasur busa dengan ukuran 200cm x 80cm dengan ketebalan 10cm lengkap dengan bantal, guling dan selimut","50000.00","10","fasilitas_68b223f5c34fc2.75890288.jpg","d6897029a4b39e0430d9a4a91fe0ae190799a8f8f9ed827137b604320f1425be","0");
 INSERT INTO `fasilitas` VALUES("5","F5","wifi","wifi ","50000.00","5","fasilitas_68b2246b9d10c2.27907149.jpg","75b8ceb38daecf3705961fb9ee7b09e594d08353a92e9386949187e0c44c2742","0");
-INSERT INTO `fasilitas` VALUES("6","F6","parkir","Parkiran motor","0.00","999","fasilitas_68b2244f452cc6.30161071.jpg","9a7d3142eb789dce302fb7d41dcae510efb114f9f4cabffc2eda2ec658c0f82b","0");
+INSERT INTO `fasilitas` VALUES("6","F6","parkir","Parkiran motor","0.00","999","fasilitas_68b2244f452cc6.30161071.jpg","9a7d3142eb789dce302fb7d41dcae510efb114f9f4cabffc2eda2ec658c0f82b","1");
 
 
 DROP TABLE IF EXISTS `kamar`;
@@ -58,7 +58,7 @@ CREATE TABLE `kamar` (
 
 INSERT INTO `kamar` VALUES("1","A1","Kamar ukuran 10 x 10 kamar mandi bersama (diluar) dilengkapi listrik dan sudah termasuk uang kebersihan","650000.00","Kosong","Perempuan","kamar_68b224d8940460.08215439.jpg","aed9080e6188c0111ae79f80bde93f757a5b982c9fe39f323e75b7d66a263c24");
 INSERT INTO `kamar` VALUES("3","B1","Kamar ukuran 10 x 10 kamar mandi dilengkapi listrik dan sudah termasuk uang kebersihan","750000.00","Kosong","Laki-Laki","kamar_68a1b46a608dc6.78322436.jpg","718faf839f00af6a795148e58d74a962a7b1e28887f5be2d457fcecc1a8ccbad");
-INSERT INTO `kamar` VALUES("4","A2","Kamar ukuran 10 x 10 kamar mandi bersama (diluar) dilengkapi listrik dan sudah termasuk uang kebersihan","650000.00","Kosong","Perempuan","kamar_68a3be0a84f9b3.31023546.jpg","dbb259ef8aa000cf63d7315c6241332fa544694510b804452de319f228c93128");
+INSERT INTO `kamar` VALUES("4","A2","Kamar ukuran 10 x 10 kamar mandi bersama (diluar) dilengkapi listrik dan sudah termasuk uang kebersihan","650000.00","Kosong","Perempuan","kamar_68a3be0a84f9b3.31023546.jpg","db01e414d057c56e348f1e7e11eb4f5bb764e25a0480c3af445b51dc98b766b9");
 
 
 DROP TABLE IF EXISTS `pembayaran`;
@@ -111,14 +111,14 @@ CREATE TABLE `user` (
   PRIMARY KEY (`id_user`)
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
-INSERT INTO `user` VALUES("1","andra@admin.com","$2y$10$IQANylhjmFDqKPmmGwUtkuA40w.n91iLCDnGoGYdJa9xfi4J1psae","Andra Setiawan","Admin","0","1bfb6d37b6c8bd6c7d92c55fae332d380f2552c824cbfb166f89c32f4e93cb58","3fb8b228d612d4ad9ec5ddbd1b5f76b19787d729b05fbea337df58df28f14046");
-INSERT INTO `user` VALUES("2","antasena@admin.com","$2y$10$GoLDjlkH4lHkhmENbJdR2OZhc9uD429nNvhvCX8QIqXQnjHyq98Pu","Antasena","Admin","0","","7a02508f87efb8529fd2233fa7318bb4ef6d83a2f94a6d4f73420add8bde5502");
-INSERT INTO `user` VALUES("3","viona@kost.com","$2y$10$AauCI.lrzTrfuLMb2vCgL.sPp9WZSZWyAAwTVUs/WQFz68.OjX2v2","Natasya Viona","User","0","","0c24bcc4a1a75257a0d85dd3b00d777172f8397127424a6bee72433df91a0a31");
+INSERT INTO `user` VALUES("1","andra@admin.com","$2y$10$IQANylhjmFDqKPmmGwUtkuA40w.n91iLCDnGoGYdJa9xfi4J1psae","Andra Setiawan","Admin","0","0246bae13455151e4f48ac97c06aaa2deab2e01eee9e09e86b36fae0b8f3796c","3fb8b228d612d4ad9ec5ddbd1b5f76b19787d729b05fbea337df58df28f14046");
+INSERT INTO `user` VALUES("2","antasena@admin.com","$2y$10$GoLDjlkH4lHkhmENbJdR2OZhc9uD429nNvhvCX8QIqXQnjHyq98Pu","Antasena putra","Admin","0","","5a0b1f9fbdbc3b15f51601d9a656256ba9974567f7c7ad513d73dc5e4884edbf");
+INSERT INTO `user` VALUES("3","viona@kost.com","$2y$10$AauCI.lrzTrfuLMb2vCgL.sPp9WZSZWyAAwTVUs/WQFz68.OjX2v2","Nathasya Viona","User","0","","f3888e7f8a3323e48d098351ddf98670209da7bcd6e2c3aa947a9a2d882fac2e");
 INSERT INTO `user` VALUES("4","indra@admin.com","$2y$10$POEkUANjULOZCOjlwyCP9uNyWwBcgBKAfhOZpNuqj2jWHxBYuR4Ry","Nurindra Setiawan","Admin","0","","2e640f53cd90e5ebe796cb6a715a6b94551af61f27b3f09696fca55ce5031c4c");
 INSERT INTO `user` VALUES("5","nurul@kost.com","$2y$10$ALmeOAuSaD3pm3/0FU9sju4lqIE4nDdDZ71ULPgHtDpTFfADxJb1K","Nurul Maryam","User","0","","caffe24a470c5572d75c806efa59119babf325b0353dcfaff36f1901a5665a52");
 INSERT INTO `user` VALUES("6","percobaan@kost.com","$2y$10$ul5P9YxLzmtqix8JozBuNe83enemsRcy22LIWF6Io7oWY.UmofhBq","coba kost","User","0","","68f7213c847c99a64d482e53a868e82394f1b8d0244c46318ca7667e2303ac45");
 INSERT INTO `user` VALUES("9","asep@kost.com","$2y$10$gDgmG/Wdehev3jCOj9DaL.7pz8HHJXo6X9Q0vqf9t0NeNKMoAol8q","asep cahyadi","User","0","","32bd479a6c69ae81ac6b89319541d848cf9fce3b0662d37fd4a915e9ad0d5474");
-INSERT INTO `user` VALUES("10","kurnia@kost.com","$2y$10$qLGbRMVNobhmGDdOJ33eYu5Oz2MCVAgpTXWyWHOKDQ7S6ZcfH1osu","Kurnia","User","0","","204542cb6bac292aa03c84c24f8d60a37d70e0cfb2270bb69d857b5d5faf1aa0");
+INSERT INTO `user` VALUES("10","kurnia@kost.com","$2y$10$qLGbRMVNobhmGDdOJ33eYu5Oz2MCVAgpTXWyWHOKDQ7S6ZcfH1osu","Kurnia meiga","User","0","","c33bed55be34b4425dbc16fb19b6a351877c48646b01ca154d8f4b2941fc03ce");
 
 
 SET FOREIGN_KEY_CHECKS = 1;

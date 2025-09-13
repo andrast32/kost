@@ -1,11 +1,11 @@
 <?php
 
-    $all_admins_result = $mysqli->query("SELECT * FROM user WHERE role = 'Admin' ORDER BY id_user ASC");
+    $data_admins = $mysqli->query("SELECT * FROM user WHERE role = 'Admin' ORDER BY id_user ASC");
 
     $active_admins = [];
     $has_deleted_users = false;
 
-    while ($admin = $all_admins_result->fetch_assoc()) {
+    while ($admin = $data_admins->fetch_assoc()) {
         if ($admin['deleted'] != 1) {
             $active_admins[] = $admin;
         } else {

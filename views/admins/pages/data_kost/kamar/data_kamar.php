@@ -141,7 +141,7 @@
             <div class="modal-header">
                 <h5 class="modal-title">
                     <span class="fw-mediumbold">Add</span>
-                    <span class="fw-light"> <?= $p?></span>
+                    <span class="fw-light"> <?= $h1?></span>
                 </h5>
                 <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
@@ -278,7 +278,7 @@
             <div class="modal-header">
                 <h5 class="modal-title">
                     <span class="fw-mediumbold">Edit</span>
-                    <span class="fw-light"> <?= $p?></span>
+                    <span class="fw-light"> <?= $h1?></span>
                 </h5>
                 <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>

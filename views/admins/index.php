@@ -25,43 +25,43 @@
             'title'     => 'The Kost | Data Kamar',
             'breadcumb' => 'Data Kost | Data Kamar',
             'h1'        => 'Data Kamar',
-            'p'         => 'Kamar',
+            'p'         => 'kamar',
         ],
         'data_fasilitas' => [
             'title'     => 'The Kost | Data Fasilitas',
             'breadcumb' => 'Data Kost | Data Fasilitas',
             'h1'        => 'Data Fasilitas',
-            'p'         => 'Fasilitas',
+            'p'         => 'fasilitas',
         ],
         'deleted_fasilitas' => [
             'title'     => 'The Kost | Deleted Fasilitas',
             'breadcumb' => 'Data Kost | Data Fasilitas | Deleted Fasilitas',
             'h1'        => 'Deleted Data Fasilitas',
-            'p'         => ''
+            'p'         => 'fasilitas'
         ],
         'data_penyewa' => [
             'title'     => 'The Kost | Data Penyewa',
             'breadcumb' => 'Data User | Data Penyewa',
             'h1'        => 'Data Penyewa',
-            'p'         => 'Penyewa',
+            'p'         => 'penyewa',
         ],
         'data_petugas' => [
             'title'     => 'The Kost | Data Petugas',
             'breadcumb' => 'Data User | Data Petugas',
             'h1'        => 'Data Petugas',
-            'p'         => 'Petugas',
+            'p'         => 'petugas',
         ],
         'data_pembayaran' => [
             'title'     => 'The Kost | Data Pembayaran',
             'breadcumb' => 'Data Pembayaran',
             'h1'        => 'Data Pembayaran',
-            'p'         => 'Pembayaran',
+            'p'         => 'pembayaran',
         ],
         'data_pemesanan' => [
             'title'     => 'The Kost | Data Pemesanan',
             'breadcumb' => 'Data Pemesanan',
             'h1'        => 'Data Pemesanan',
-            'p'         => 'Pemesanan',
+            'p'         => 'pemesanan',
         ],
         'index' => [
             'title'     => 'The Kost | Dashboard',
@@ -73,37 +73,37 @@
             'title'     => 'The Kost | Deleted Penyewa',
             'breadcumb' => 'Data User | Data Penyewa | Deleted Penyewa',
             'h1'        => 'Data Penyewa Terhapus',
-            'p'         => 'Data Penyewa'
+            'p'         => 'penyewa'
         ],
         'data_biodata' => [
             'title'     => 'The Kost | Biodata Penyewa',
-            'breadcumb' => 'Data User | Biodata',
+            'breadcumb' => 'Biodata',
             'h1'        => 'Biodata Penyewa',
-            'p'         => 'Biodata',
+            'p'         => 'biodata',
         ],
         'biodata_user' => [
             'title'     => 'The Kost | Biodata Penyewa',
             'breadcumb' => 'Data User | Data Penyewa | Biodata',
             'h1'        => 'Biodata Penyewa',
-            'p'         => 'Biodata',
+            'p'         => 'biodata',
         ],
         'pemesanan_user' => [
             'title'     => 'The Kost | Pemesanan Penyewa',
             'breadcumb' => 'Data User | Data Penyewa | Pemesanan',
             'h1'        => 'Pemesanan Penyewa',
-            'p'         => 'Pemesanan',
+            'p'         => 'pemesanan',
         ],
         'pemesanan_user' => [
             'title'     => 'The Kost | Pemesanan Penyewa',
             'breadcumb' => 'Data User | Data Penyewa | Pemesanan',
             'h1'        => 'Pemesanan Penyewa',
-            'p'         => 'Pemesanan',
+            'p'         => 'pemesanan',
         ],
         'deleted_petugas' => [
             'title'     => 'The Kost | Deleted Petugas',
             'breadcumb' => 'Data User | Data Petugas | Deleted Petugas',
             'h1'        => 'Data Petugas Terhapus',
-            'p'         => 'Data Petugas'
+            'p'         => 'petugas'
         ],
     ];
 

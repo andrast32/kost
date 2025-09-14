@@ -1,3 +1,20 @@
+<?php
+
+    $data_fasilitas = $mysqli->query("SELECT * FROM fasilitas ORDER BY id_fasilitas ASC");
+
+    $active_fasilitas = [];
+    $has_deleted_fasilitas = false;
+
+    while ($fasilitas = $data_fasilitas->fetch_assoc()) {
+        if ($fasilitas['deleted'] != 1) {
+            $active_fasilitas[] = $fasilitas;
+        } else {
+            $has_deleted_fasilitas = true;
+        }
+    }
+
+?>
+
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-12">
@@ -7,28 +24,22 @@
                     <div class="d-flex align-items-center">
 
                         <h4 class="card-title">
-                            <?= $h1; ?>
+                            <?= htmlspecialchars($h1) ?>
                         </h4>
 
                         <button class="btn btn-border btn-round btn-primary ms-auto" style="margin-right: 0.5rem;" data-bs-toggle="modal" data-bs-target="#add">
-                            <i class="fas fa-plus"></i> Add <?= $p; ?>
+                            <i class="fas fa-plus"></i> Add <?= htmlspecialchars($p) ?>
                         </button>
 
                         <?php 
-                            $fasilitas = $mysqli->query("SELECT deleted FROM fasilitas WHERE deleted = 1");
-                            while ($sp = mysqli_fetch_array($fasilitas)) {
-
-                                if ( $sp['deleted'] == 1) :
-                                    ?>
-
-                                    <a href="?fasilitas=deleted_fasilitas" class="btn btn-round btn-danger btn-border">
-                                        <i class="fas fa-trash"></i> Lihat sampah
-                                    </a>
-
-                                    <?php 
-                                endif; 
-                            } 
+                            if ($has_deleted_fasilitas) :
                         ?>
+
+                            <a href="?fasilitas=deleted_fasilitas" class="btn btn-round btn-danger btn-border">
+                                <i class="fas fa-trash"></i> Lihat sampah
+                            </a>
+
+                        <?php endif; ?>
 
                     </div>
                 </div>
@@ -40,10 +51,9 @@
                             <thead>
                                 <tr align="center">
 
-                                    <th>No</th>
+                                    <th style="width: 10%;">No</th>
                                     <th>Kode</th>
                                     <th>Nama</th>
-                                    <th>Deskripsi</th>
                                     <th>Stok</th>
                                     <th>Foto</th>
                                     <th>Harga</th>
@@ -55,23 +65,20 @@
                             <tbody>
 
                                 <?php 
-                                    $fasilitas = $mysqli->query("SELECT * FROM fasilitas where deleted != 1 ORDER BY kode_fasilitas asc");
 
                                     $no = 0;
-                                    while ($data = mysqli_fetch_array($fasilitas)) {
+                                    foreach ($active_fasilitas as $data) {
                                         $no++;
-                                ?>
-                                    <tr align="center">
+                                        ?>
+                                    <tr>
 
-                                        <td><?= $no; ?></td>
+                                        <td align="center"><?= $no; ?></td>
 
-                                        <td><?= $data['kode_fasilitas']; ?></td>
+                                        <td align="center"><?= htmlspecialchars($data['kode_fasilitas']) ?></td>
 
-                                        <td><?= $data['nama_fasilitas']; ?></td>
+                                        <td><?= htmlspecialchars($data['nama_fasilitas']) ?></td>
 
-                                        <td><?= $data['deskripsi']; ?></td>
-
-                                        <td><?= $data['stok']; ?></td>
+                                        <td align="center"><?= htmlspecialchars($data['stok']) ?></td>
 
                                         <td>
                                             <div class="avatar avatar-xxl">
@@ -81,7 +88,7 @@
 
                                         <td>
                                             <?php 
-                                                if ($data['harga'] >= 500) {
+                                                if ($data['harga'] >= 5000) {
                                                     echo "Rp " . number_format($data['harga'], 2, ',', '.');
                                                 } else {
                                                     echo "Gratis";
@@ -91,12 +98,27 @@
 
                                         <td align="center">
 
-                                            <button class="btn btn-link btn-primary btn-lg" data-bs-toggle="modal" data-bs-target="#edit-<?= $data['id_fasilitas']; ?>">
-                                                <i class="fas fa-edit"></i>
+                                            <button 
+                                                class="btn btn-link btn-primary btn-lg edit-btn"
+                                                data-bs-toggle="modal" 
+                                                data-bs-target="#edit"
+                                                data-id="<?= $data['id_fasilitas']; ?>"
+                                                data-kode="<?= htmlspecialchars($data['kode_fasilitas']); ?>"
+                                                data-nama="<?= htmlspecialchars($data['nama_fasilitas']); ?>"
+                                                data-stok="<?= htmlspecialchars($data['stok']); ?>"
+                                                data-harga="<?= htmlspecialchars($data['harga']); ?>"
+                                                data-foto="<?= $data['foto']; ?>"
+                                                data-deskripsi="<?= htmlspecialchars($data['deskripsi']); ?>">
+                                                    <i class="fas fa-edit"></i>
                                             </button>
 
-                                            <button class="btn btn-link btn-danger btn-lg" onclick="deleteFasilitas(<?= $data['id_fasilitas']; ?>)">
-                                                <i class="fas fa-trash"></i>
+                                            <button 
+                                                class="btn btn-link btn-danger btn-lg"
+                                                onclick="deleteFasilitas(
+                                                    <?= $data['id_fasilitas']; ?>,
+                                                    '<?= htmlspecialchars($data['nama_fasilitas']); ?>'
+                                                )">
+                                                    <i class="fas fa-trash"></i>
                                             </button>
 
                                         </td>
@@ -112,7 +134,6 @@
                                     <th>No</th>
                                     <th>Kode</th>
                                     <th>Nama</th>
-                                    <th>Deskripsi</th>
                                     <th>Stok</th>
                                     <th>Foto</th>
                                     <th>Harga</th>
@@ -137,7 +158,7 @@
             <div class="modal-header">
                 <h5 class="modal-title">
                     <span class="fw-mediumbold">Add</span>
-                    <span class="fw-light"><?= $p?></span>
+                    <span class="fw-light"><?= $h1?></span>
                 </h5>
                 <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
@@ -273,164 +294,157 @@
 </div>
 
 <!-- modal edit -->
-<?php
-    $fasilitas = $mysqli->query("SELECT * FROM fasilitas WHERE id_fasilitas");
-    while ($ef = mysqli_fetch_array($fasilitas)) {
-    ?>
-    <div class="modal fade" id="edit-<?= $ef['id_fasilitas']; ?>" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
+<div class="modal fade" id="edit" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
 
-                <div class="modal-header">
-                    <h5 class="modal-title">
-                        <span class="fw-mediumbold">Edit</span>
-                        <span class="fw-light">
-                            <?= $p?>
-                            <?= $ef['nama_fasilitas'] ?>
-                        </span>
-                    </h5>
-                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-
-                <div class="modal-body">
-                    <form action="settings/functions/edit/edit_fasilitas" method="post" enctype="multipart/form-data">
-                        <div class="row">
-
-                            <input type="hidden" class="form-control" id="id_fasilitas" name="id_fasilitas" value="<?= $ef['id_fasilitas']; ?>" readonly>
-
-                            <div class="col-sm-12">
-                                <div class="form-group">
-
-                                    <label for="nama_fasilitas">Nama Fasilitas <span class="text-danger">*</span></label>
-
-                                    <div class="input-group">
-
-                                        <span class="input-group-text">
-                                            <i class="fas fa-pen"></i>
-                                        </span>
-
-                                        <input type="text" name="nama_fasilitas" id="nama_fasilitas" class="form-control" value="<?= $ef['nama_fasilitas'] ?>" placeholder="Masukan nama fasilitas" required>
-
-                                    </div>
-
-                                </div>
-                            </div>
-
-                            <div class="col-md-6 pe-0">
-                                <div class="form-group">
-
-                                    <label for="kode_fasilitas">Kode Fasilitas <span class="text-danger">*</span></label>
-
-                                    <div class="input-group">
-
-                                        <span class="input-group-text">
-                                            <i class="fas fa-key"></i>
-                                        </span>
-
-                                        <input type="text" name="kode_fasilitas" id="kode_fasilitas" class="form-control" value="<?= $ef['kode_fasilitas'] ?>" placeholder="Masukan kode fasilitas" required>
-
-                                    </div>
-
-                                </div>
-                            </div>
-
-                            <div class="col-md-6">
-                                <div class="form-group">
-
-                                    <label for="harga">Harga Fasilitas <span class="text-danger">*</span></label>
-
-                                    <div class="input-group">
-
-                                        <span class="input-group-text">
-                                            <i class="fas fa-tag"></i>
-                                        </span>
-
-                                        <input type="number" name="harga" id="harga" class="form-control" value="<?= $ef['harga'] ?>" placeholder="Masukan harga fasilitas" required>
-
-                                    </div>
-
-                                </div>
-                            </div>
-
-                            <div class="col-md-6 pe-0">
-                                <div class="form-group">
-
-                                    <label for="stok">Stok Fasilitas <span class="text-danger">*</span></label>
-
-                                    <div class="input-group">
-
-                                        <span class="input-group-text">
-                                            <i class="fas fa-box"></i>
-                                        </span>
-
-                                        <input type="number" name="stok" id="stok" class="form-control" value="<?= $ef['stok'] ?>" placeholder="Masukan stok fasilitas" required>
-
-                                    </div>
-
-                                </div>
-                            </div>
-
-                            <div class="col-md-6">
-                                <div class="form-control">
-
-                                    <label for="foto">
-                                        Foto Fasilitas
-                                        <span class="text-danger">*</span>
-                                    </label>
-
-                                    <div class="input-group">
-
-                                        <span class="input-group-text">
-                                            <i class="fas fa-camera"></i>
-                                        </span>
-
-                                        <input type="file" name="foto" id="foto" class="form-control" accept=".jpg, .jpeg, .png">
-
-                                    </div>
-
-                                </div>
-                            </div>
-
-                            <div class="col-sm-12">
-                                <div class="form-group">
-
-                                    <label for="deskripsi">Deskripsi Fasilitas <span class="text-danger">*</span></label>
-
-                                    <div class="input-group">
-
-                                        <span class="input-group-text">
-                                            <i class="fas fa-list"></i>
-                                        </span>
-
-                                        <textarea name="deskripsi" id="deskripsi" class="form-control" placeholder="Masukan deskripsi fasilitas" required rows="3" style="resize: none;"><?= $ef['deskripsi'] ?></textarea>
-
-                                    </div>
-
-                                </div>
-                            </div>
-
-                            <div class="modal-footer">
-                                <input type="reset" value="Reset" class="btn btn-border btn-round btn-primary float-right">
-                                <input type="submit" value="Submit" class="btn btn-border btn-round btn-success float-right">
-                            </div>
-
-                        </div>
-                    </form>
-                </div>
-
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    <span class="fw-mediumbold">Edit</span>
+                    <span class="fw-light">
+                        <?= $h1?>
+                    </span>
+                </h5>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
+
+            <div class="modal-body">
+                <form action="settings/functions/edit/edit_fasilitas" method="post" enctype="multipart/form-data">
+                    <div class="row">
+
+                        <input type="text" class="form-control" id="id_fasilitas" name="id_fasilitas" readonly>
+
+                        <div class="col-sm-12">
+                            <div class="form-group">
+
+                                <label for="nama_fasilitas">Nama Fasilitas <span class="text-danger">*</span></label>
+
+                                <div class="input-group">
+
+                                    <span class="input-group-text">
+                                        <i class="fas fa-pen"></i>
+                                    </span>
+
+                                    <input type="text" name="nama_fasilitas" id="nama_fasilitas" class="form-control" placeholder="Masukan nama fasilitas" required>
+
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 pe-0">
+                            <div class="form-group">
+
+                                <label for="kode_fasilitas">Kode Fasilitas <span class="text-danger">*</span></label>
+
+                                <div class="input-group">
+
+                                    <span class="input-group-text">
+                                        <i class="fas fa-key"></i>
+                                    </span>
+
+                                    <input type="text" name="kode_fasilitas" id="kode_fasilitas" class="form-control" placeholder="Masukan kode fasilitas" required>
+
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+
+                                <label for="harga">Harga Fasilitas <span class="text-danger">*</span></label>
+
+                                <div class="input-group">
+
+                                    <span class="input-group-text">
+                                        <i class="fas fa-tag"></i>
+                                    </span>
+
+                                    <input type="number" name="harga" id="harga" class="form-control" placeholder="Masukan harga fasilitas" required>
+
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 pe-0">
+                            <div class="form-group">
+
+                                <label for="stok">Stok Fasilitas <span class="text-danger">*</span></label>
+
+                                <div class="input-group">
+
+                                    <span class="input-group-text">
+                                        <i class="fas fa-box"></i>
+                                    </span>
+
+                                    <input type="number" name="stok" id="stok" class="form-control" placeholder="Masukan stok fasilitas" required>
+
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-control">
+
+                                <label for="foto">
+                                    Foto Fasilitas
+                                    <span class="text-danger">*</span>
+                                </label>
+
+                                <div class="input-group">
+
+                                    <span class="input-group-text">
+                                        <i class="fas fa-camera"></i>
+                                    </span>
+
+                                    <input type="file" name="foto" id="foto" class="form-control" accept=".jpg, .jpeg, .png">
+
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="col-sm-12">
+                            <div class="form-group">
+
+                                <label for="deskripsi">Deskripsi Fasilitas <span class="text-danger">*</span></label>
+
+                                <div class="input-group">
+
+                                    <span class="input-group-text">
+                                        <i class="fas fa-list"></i>
+                                    </span>
+
+                                    <textarea name="deskripsi" id="deskripsi" class="form-control" placeholder="Masukan deskripsi fasilitas" required rows="3" style="resize: none;"></textarea>
+
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="modal-footer">
+                            <input type="reset" value="Reset" class="btn btn-border btn-round btn-primary float-right">
+                            <input type="submit" value="Submit" class="btn btn-border btn-round btn-success float-right">
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+
         </div>
     </div>
-
-<?php } ?>
+</div>
 
 <script>
-    function deleteFasilitas(id_fasilitas) {
+    function deleteFasilitas(id_fasilitas, nama_fasilitas) {
         Swal.fire({
-            title: 'Yakin mau hapus?',
-            text: "Data ini akan dihapus!",
+            title: 'Yakin mau hapus <?= $p?>?',
+            text: "Fasilitas " + nama_fasilitas + " akan dihapus!",
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#e74c3c',

@@ -63,7 +63,14 @@
                             </thead>
 
                             <tbody>
-                                <?php
+
+                                <?php if (empty($active_admins)) : ?>
+                                    <tr>
+                                        <td colspan="7" align="center">Tidak ada data fasilitas yang tersedia.</td>
+                                    </tr>
+                                    <?php else : ?>
+
+                                    <?php
 
                                     $no = 0;
                                     foreach ($active_admins as $data) {
@@ -104,6 +111,8 @@
                                             </tr>
                                         <?php 
                                     }
+
+                                    endif;
 
                                 ?>
                             </tbody>

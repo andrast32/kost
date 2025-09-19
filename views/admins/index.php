@@ -37,7 +37,7 @@
             'title'     => 'The Kost | Deleted Fasilitas',
             'breadcumb' => 'Data Kost | Data Fasilitas | Deleted Fasilitas',
             'h1'        => 'Deleted Data Fasilitas',
-            'p'         => 'fasilitas'
+            'p'         => 'Data fasilitas'
         ],
         'data_penyewa' => [
             'title'     => 'The Kost | Data Penyewa',
@@ -73,7 +73,7 @@
             'title'     => 'The Kost | Deleted Penyewa',
             'breadcumb' => 'Data User | Data Penyewa | Deleted Penyewa',
             'h1'        => 'Data Penyewa Terhapus',
-            'p'         => 'penyewa'
+            'p'         => 'Data penyewa'
         ],
         'data_biodata' => [
             'title'     => 'The Kost | Biodata Penyewa',

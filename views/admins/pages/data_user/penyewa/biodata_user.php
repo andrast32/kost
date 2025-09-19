@@ -1,23 +1,31 @@
 <?php
 
-    $sl_user = isset($_GET['sl_user']) ? $mysqli->real_escape_string($_GET['sl_user']) : '';
-
-    $id_user = 0;
-
-    if (!empty($sl_user)) {
-        $stmt = $mysqli->prepare("SELECT id_user FROM user WHERE sl_user = ?");
-        $stmt->bind_param("s", $sl_user);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        if ($row = $result->fetch_assoc()) {
-            $id_user = intval($row['id_user']);
-        }
-        $stmt->close();
+    $sl_user = $_GET['sl_user'] ?? '';
+    if (empty($sl_user)) {
+        die("Akses tidak valid. User tidak diizinkan!");
     }
 
-    if ($id_user === 0) {
-        die("tidak ada data yang anda maksud");
+    $stmt = $mysqli->prepare("
+        SELECT
+            u.id_user, u.nama_user, u.sl_user,
+            b.id_biodata, b.jk, b.alamat, b.no_hp, 
+            b.foto, b.scan_ktp, b.scan_kk, b.bukti_nikah
+        FROM user u
+        LEFT JOIN biodata b ON u.id_user = b.id_user
+        WHERE u.sl_user = ?
+        LIMIT 1
+    ");
+    $stmt->bind_param("s", $sl_user);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $data = $result->fetch_assoc();
+    $stmt->close();
+
+    if (!$data) {
+        die("User dengan kode tersebut tidak ditemukan.");
     }
+
+    $has_biodata = !is_null($data['id_biodata']);
 
 ?>
 
@@ -29,23 +37,18 @@
                 <div class="card-header">
                     <div class="d-flex align-items-center">
 
-                        <h4 class="card-title"><?= $h1;?></h4>
+                        <h4 class="card-title">
+                            <?= htmlspecialchars($h1 ?? 'Data Biodata'); ?>
+                        </h4>
 
                         <a href="?penyewa=data_penyewa" class="btn btn-round btn-primary btn-border ms-auto" style="margin: 0 0.5rem;">
                             <i class="fas fa-angle-double-left"></i> Kembali
                         </a>
 
-                        <?php 
-
-                            $stmt = $mysqli->prepare("SELECT COUNT(*) AS total FROM biodata WHERE id_user = ?");
-                            $stmt->bind_param("i", $id_user);
-                            $stmt->execute();
-                            $result = $stmt->get_result();
-                            $cek = $result->fetch_assoc();
-                            if ($cek['total'] == 0): ?>
+                        <?php if (!$has_biodata): ?>
 
                                 <button class="btn btn-border btn-round btn-secondary " data-bs-toggle="modal" data-bs-target="#add">
-                                    <i class="fas fa-plus"></i> Add <?= $p;?>
+                                    <i class="fas fa-plus"></i> Tambah <?= htmlentities($p); ?>
                                 </button>
 
                         <?php endif?>
@@ -59,7 +62,6 @@
 
                             <thead>
                                 <tr align="center">
-                                    <th>No</th>
                                     <th>Nama</th>
                                     <th>Jenis Kelamin</th>
                                     <th style="width: 25%;">Alamat</th>
@@ -70,18 +72,13 @@
                             </thead>
 
                             <tbody>
-                                <?php
-                                    $no = 0;
-                                    $bio = $mysqli->query("SELECT * FROM biodata JOIN user ON biodata.id_user = user.id_user WHERE biodata.id_user = {$id_user}");
-                                    while ($data = $bio->fetch_assoc()) {
-                                        $no++;
-                                ?>
 
-                                    <tr>
-                                        <td align="center"><?= $no?></td>
-                                        <td><?= $data['nama_user']?></td>
-                                        <td><?= $data['jk']?></td>
-                                        <td><?= $data['alamat']?></td>
+                                <?php if ($has_biodata) :?>
+
+                                    <tr align="center">
+                                        <td><?= htmlspecialchars($data['nama_user'])?></td>
+                                        <td><?= htmlspecialchars($data['jk'])?></td>
+                                        <td><?= htmlspecialchars($data['alamat'])?></td>
                                         <td align="center">
                                             <div class="avatar avatar-xxl">
                                                 <img src="/kost/assets/uploads/biodata/foto/<?= $data['foto'] ?>" alt="foto <?= $data['nama_user']?>" class="avatar-img rounded">
@@ -89,14 +86,14 @@
                                         </td>
 
                                         <td align="center">
-                                            <button type="button" class="btn btn-secondary btn-link btn-lg" data-bs-toggle="modal" data-bs-target="#doc-<?= $data['id_user']?>">
+                                            <button type="button" class="btn btn-secondary btn-link btn-lg" data-bs-toggle="modal" data-bs-target="#doc">
                                                 <i class="fas fa-folder"></i>
                                             </button>
                                         </td>
 
                                         <td align="center">
 
-                                            <button type="button" class="btn btn-primary btn-link btn-lg" data-bs-toggle="modal" data-bs-target="#edit-<?= $data['id_biodata']?>">
+                                            <button type="button" class="btn btn-primary btn-link btn-lg" data-bs-toggle="modal" data-bs-target="#edit">
                                                 <i class="fas fa-edit"></i>
                                             </button>
 
@@ -107,7 +104,14 @@
                                         </td>
                                     </tr>
 
-                                <?php }?>
+                                <?php else: ?>
+                                    <tr>
+                                        <td colspan="6" class="text-center">
+                                            Biodata untuk <strong><?= htmlspecialchars($data['nama_user']); ?></strong> belum ditambahkan.
+                                        </td>
+                                    </tr>
+                                <?php endif; ?>
+
                             </tbody>
 
                         </table>
@@ -120,18 +124,6 @@
 </div>
 
 <!-- modal add -->
-<?php
-
-    $sl_user = $_GET['sl_user'] ?? '';
-
-    $stmt_user = $mysqli->prepare("SELECT nama_user, id_user FROM user WHERE sl_user = ?");
-    $stmt_user->bind_param("s", $sl_user);
-    $stmt_user->execute();
-    $result_user = $stmt_user->get_result();
-    $user_data = $result_user->fetch_assoc();
-    $nama_user = $user_data['nama_user'] ?? '';
-    $id_user = $user_data['id_user'] ?? '';
-?>
 
 <div class="modal fade" id="add" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -139,11 +131,8 @@
 
             <div class="modal-header">
                 <h5 class="modal-title">
-                    <span class="fw-mediumbold">Add</span>
-                    <span class="fw-light">
-                        <?= $p?>
-                        <?= htmlspecialchars($nama_user)?>
-                    </span>
+                    Tambah biodata untuk 
+                    <strong><?= htmlspecialchars($data['nama_user']); ?></strong>
                 </h5>
                 <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
@@ -154,7 +143,7 @@
                 <form action="settings/functions/add/add_bio" method="post" enctype="multipart/form-data">
                     <div class="row">
 
-                        <input type="hidden" readonly class="form-control" name="id_user" id="id_user" value="<?= htmlspecialchars($id_user) ?>">
+                        <input type="hidden" readonly class="form-control" name="id_user" id="id_user" value="<?= htmlspecialchars($data['id_user']) ?>">
 
                         <div class="col-sm-12">
                             <div class="form-group">
@@ -169,7 +158,7 @@
                                         <i class="far fa-user"></i>
                                     </span>
 
-                                    <input type="text" readonly class="form-control" value="<?= $nama_user?>">
+                                    <input type="text" readonly class="form-control" value="<?= htmlspecialchars($data['nama_user']) ?>">
 
                                 </div>
 
@@ -337,29 +326,19 @@
     </div>
 </div>
 
-<!-- modal edit -->
-<?php
+<?php if ($has_biodata) : ?>
 
-    $sl_user = isset($_GET['sl_user']) ? $mysqli->real_escape_string($_GET['sl_user']) : '';
-
-    $bio = $mysqli->query("
-        SELECT biodata.*, user.*
-        FROM biodata
-        JOIN user ON biodata.id_user = user.id_user
-        WHERE user.sl_user = '$sl_user'
-    ");
-    while ($eb = mysqli_fetch_array($bio)) {
-    ?>
-    <div class="modal fade" id="edit-<?= $eb['id_biodata'] ?>" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- modal edit -->
+    <div class="modal fade" id="edit" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
 
                 <div class="modal-header">
                     <h5 class="modal-title">
-                        <span class="fw-mediumbold">Edit</span>
+                        <span class="fw-mediumbold">Rubah</span>
                         <span class="fw-light">
                             <?= $p?>
-                            <?= $eb['nama_user']?>
+                            <?= htmlspecialchars($data['nama_user'])?>
                         </span>
                     </h5>
                 </div>
@@ -368,8 +347,8 @@
                     <form action="settings/functions/edit/edit_bio" method="post" enctype="multipart/form-data">
                         <div class="row">
 
-                            <input type="hidden" name="id_biodata" id="id_biodata" readonly class="form-control" value="<?= $eb['id_biodata'] ?>">
-                            <input type="hidden" name="id_user" id="id_user" readonly class="form-control" value="<?= $eb['id_user'] ?>">
+                            <input type="hidden" name="id_biodata" id="id_biodata" readonly class="form-control" value="<?= htmlspecialchars($data['id_biodata']) ?>">
+                            <input type="hidden" name="id_user" id="id_user" readonly class="form-control" value="<?= htmlspecialchars($data['id_user']) ?>">
 
                             <div class="col-sm-12">
                                 <div class="form-group">
@@ -382,7 +361,7 @@
                                             <i class="far fa-user"></i>
                                         </span>
 
-                                        <input type="text" readonly class="form-control" value="<?= $eb['nama_user'] ?>">
+                                        <input type="text" readonly class="form-control" value="<?= $data['nama_user'] ?>">
 
                                     </div>
 
@@ -403,7 +382,7 @@
                                             <i class="fas fa-map-marker-alt"></i>
                                         </span>
 
-                                        <input type="text" name="alamat" id="alamat" class="form-control" value="<?= $eb['alamat'] ?>" placeholder="Masukan alamat lengkap" required>
+                                        <input type="text" name="alamat" id="alamat" class="form-control" value="<?= $data['alamat'] ?>" placeholder="Masukan alamat lengkap" required>
 
                                     </div>
 
@@ -428,12 +407,12 @@
                                             <option value="" disabled selected>Pilih jenis kelamin</option>
                                             <option 
                                             value="Laki-Laki" 
-                                            <?= $eb['jk'] == 'Laki-Laki' ? 'selected' : '' ?>>
+                                            <?= $data['jk'] == 'Laki-Laki' ? 'selected' : '' ?>>
                                                 Laki-Laki
                                             </option>
                                             <option 
                                             value="Perempuan" 
-                                            <?= $eb['jk'] == 'Perempuan' ? 'selected' : '' ?>>
+                                            <?= $data['jk'] == 'Perempuan' ? 'selected' : '' ?>>
                                                 Perempuan
                                             </option>
                                         </select>
@@ -457,7 +436,7 @@
                                             <i class="fas fa-phone"></i>
                                         </span>
 
-                                        <input type="text" name="no_hp" id="no_hp" class="form-control" placeholder="Masukan Nomor hp" value="<?= $eb['no_hp']?>" required>
+                                        <input type="text" name="no_hp" id="no_hp" class="form-control" placeholder="Masukan Nomor hp" value="<?= $data['no_hp']?>" required>
 
                                     </div>
 
@@ -556,29 +535,16 @@
             </div>
         </div>
     </div>
-<?php }?>
 
-<!-- modal doc -->
-<?php
-
-    $sl_user = isset($_GET['sl_user']) ? $mysqli->real_escape_string($_GET['sl_user']) : '';
-
-    $bio = $mysqli->query("
-        SELECT biodata.*, user.*
-        FROM biodata
-        JOIN user ON biodata.id_user = user.id_user
-        WHERE user.sl_user = '$sl_user'
-    ");
-    while ($vd = mysqli_fetch_array($bio)) {
-    ?>
-    <div class="modal fade" id="doc-<?= $vd['id_user'] ?>" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- modal doc -->
+    <div class="modal fade" id="doc" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
 
                 <div class="modal-header">
                     <h5 class="modal-title">
                         <span class="fw-mediumbold">Document</span>
-                        <span class="fw-light"><?= $vd['nama_user']?></span>
+                        <span class="fw-light"><?= htmlspecialchars($data['nama_user']) ?></span>
                     </h5>
                 </div>
 
@@ -595,18 +561,18 @@
                                     <i class="fas fa-phone"></i>
                                 </span>
 
-                                <input type="text" class="form-control" value="<?= $vd['no_hp'] ?>" readonly>
+                                <input type="text" class="form-control" value="<?= htmlspecialchars($data['no_hp']) ?>" readonly>
 
                             </div>
 
                         </div>
 
-                        <?php if (!empty($vd['scan_ktp'])) : ?>
+                        <?php if (!empty($data['scan_ktp'])) : ?>
                             <div class="col-md-6 pe-0">
                                 <div class="form-group">
 
                                     <label for="ktp">
-                                        KTP <?= $vd['nama_user']?>
+                                        KTP <?= htmlspecialchars($data['nama_user']) ?>
                                     </label>
 
                                     <div class="input-group">
@@ -615,10 +581,10 @@
                                             <i class="far fa-address-card"></i>
                                         </span>
 
-                                        <form action="/kost/assets/uploads/biodata/ktp/<?= $vd['scan_ktp']; ?>" method="get"
+                                        <form action="/kost/assets/uploads/biodata/ktp/<?= htmlspecialchars($data['scan_ktp']) ?>" target="_blank" method="get"
                                         >
                                             <button type="submit" class="btn">
-                                                KTP <?= $vd['nama_user']?>
+                                                Scan KTP
                                             </button>
                                         </form>
 
@@ -628,12 +594,12 @@
                             </div>
                         <?php endif; ?>
 
-                        <?php if (!empty($vd['scan_kk'])) : ?>
+                        <?php if (!empty($data['scan_kk'])) : ?>
                             <div class="col-md-6">
                                 <div class="form-group">
 
                                     <label for="kk">
-                                        KK <?= $vd['nama_user']?>
+                                        KK <?= htmlspecialchars($data['nama_user']) ?>
                                     </label>
 
                                     <div class="input-group">
@@ -642,10 +608,10 @@
                                             <i class="far fa-address-card"></i>
                                         </span>
 
-                                        <form action="/kost/assets/uploads/biodata/kk/<?= $vd['scan_kk']; ?>" method="get"
+                                        <form action="/kost/assets/uploads/biodata/kk/<?= htmlspecialchars($data['scan_kk']) ?>" target="_blank" method="get"
                                         >
                                             <button type="submit" class="btn">
-                                                KK <?= $vd['nama_user']?>
+                                                Scan KK
                                             </button>
                                         </form>
 
@@ -655,12 +621,12 @@
                             </div>
                         <?php endif; ?>
 
-                        <?php if (!empty($vd['bukti_nikah'])) : ?>
+                        <?php if (!empty($data['bukti_nikah'])) : ?>
                             <div class="col-sm-12">
                                 <div class="form-group">
 
                                     <label for="ktp">
-                                        Bukti Menikah <?= $vd['nama_user']?>
+                                        Bukti Menikah <?= $data['nama_user']?>
                                     </label>
 
                                     <div class="input-group">
@@ -669,10 +635,10 @@
                                             <i class="fas fa-book"></i>
                                         </span>
 
-                                        <form action="/kost/assets/uploads/biodata/bukti_nikah/<?= $vd['bukti_nikah']; ?>" method="get"
+                                        <form action="/kost/assets/uploads/biodata/bukti_nikah/<?= htmlspecialchars($data['bukti_nikah']); ?>" target="_blank" method="get"
                                         >
                                             <button type="submit" class="btn">
-                                                Bukti Menikah <?= $vd['nama_user']?>
+                                                Document bukti pernikahan
                                             </button>
                                         </form>
 
@@ -694,13 +660,14 @@
             </div>
         </div>
     </div>
-<?php }?>
+
+<?php endif; ?>
 
 <script>
     function deleteBio(id_biodata, id_user) {
         Swal.fire({
             title: 'Hapus permanen?',
-            text: "Anda yakin akan menghapus data ini selamanya?",
+            text: "Anda yakin akan menghapus biodata <?= htmlspecialchars($data['nama_user']) ?>?",
             icon: 'warning',
             showCancelButton: true,
             confirmButtonText: 'Ya, hapus!',

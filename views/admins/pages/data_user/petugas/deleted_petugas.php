@@ -48,45 +48,52 @@
                             </thead>
 
                             <tbody>
-                                <?php
+                                <?php if (empty($active_admin)) : ?>
+                                    <tr>
+                                        <td colspan="7" align="center">Tidak ada data petugas yang terhapus.</td>
+                                    </tr>
+                                    <?php
 
-                                    $no = 0;
-                                    foreach ($active_admin as $data) {
-                                        $no++;
-                                        ?>
-                                        <tr align="center">
+                                    else :
 
-                                            <td><?= $no ?></td>
+                                        $no = 0;
+                                        foreach ($active_admin as $data) {
+                                            $no++;
+                                            ?>
+                                            <tr align="center">
 
-                                            <td><?= htmlspecialchars($data['nama_user']) ?></td>
+                                                <td><?= $no ?></td>
 
-                                            <td><?= htmlspecialchars($data['username']) ?></td>
+                                                <td><?= htmlspecialchars($data['nama_user']) ?></td>
 
-                                            <td align="center">
+                                                <td><?= htmlspecialchars($data['username']) ?></td>
 
-                                                <button 
-                                                    class="btn btn-link btn-success btn-lg" 
-                                                    onclick="restoreuser(
-                                                        <?= $data['id_user']; ?>, 
-                                                        '<?= htmlspecialchars($data['nama_user']) ?>'
-                                                    )">
+                                                <td align="center">
+
+                                                    <button
+                                                        class="btn btn-link btn-success btn-lg"
+                                                        onclick="restoreuser(
+                                                            <?= $data['id_user']; ?>,
+                                                            '<?= htmlspecialchars($data['nama_user']) ?>'
+                                                        )">
                                                         <i class="fas fa-undo"></i>
-                                                </button>
+                                                    </button>
 
-                                                <button 
-                                                    class="btn btn-link btn-danger btn-lg" 
-                                                    onclick="deletePermanent(
-                                                        <?= $data['id_user']; ?>,
-                                                        '<?= htmlspecialchars($data['nama_user']) ?>'
-                                                    )">
-                                                    <i class="fas fa-trash-alt"></i>
-                                                </button>
+                                                    <button
+                                                        class="btn btn-link btn-danger btn-lg"
+                                                        onclick="deletePermanent(
+                                                            <?= $data['id_user']; ?>,
+                                                            '<?= htmlspecialchars($data['nama_user']) ?>'
+                                                        )">
+                                                        <i class="fas fa-trash-alt"></i>
+                                                    </button>
 
-                                            </td>
+                                                </td>
 
-                                        </tr>
-                                        <?php
-                                    }
+                                            </tr>
+                                            <?php
+                                        }
+                                    endif;
 
                                 ?>
                             </tbody>
@@ -108,6 +115,7 @@
         </div>
     </div>
 </div>
+
 
 <script>
     function restoreuser(id, nama_user) {

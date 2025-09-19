@@ -66,7 +66,7 @@
 
                                 <?php if (empty($active_admins)) : ?>
                                     <tr>
-                                        <td colspan="7" align="center">Tidak ada data fasilitas yang tersedia.</td>
+                                        <td colspan="7" align="center">Tidak ada data petugas yang tersedia.</td>
                                     </tr>
                                     <?php else : ?>
 
@@ -242,8 +242,10 @@
             <div class="modal-header">
 
                 <h5 class="modal-title">
-                    <span class="fw-mediumbold">Edit</span>
-                    <span class="fw-light"> <?= htmlspecialchars($h1) ?></span>
+                    <span class="fw-mediumbold">Rubah</span>
+                    <span class="fw-light">
+                        <?= htmlspecialchars($h1) ?>
+                    </span>
                 </h5>
 
                 <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">

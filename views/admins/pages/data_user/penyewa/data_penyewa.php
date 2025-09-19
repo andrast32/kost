@@ -63,6 +63,13 @@
                             </thead>
 
                             <tbody>
+
+                                <?php if (empty($active_users)) : ?>
+                                    <tr>
+                                        <td colspan="7" align="center">Tidak ada data penyewa yang tersedia.</td>
+                                    </tr>
+                                    <?php else : ?>
+
                                 <?php
 
                                     $no = 0;
@@ -110,6 +117,7 @@
                                         </tr>
                                         <?php
                                     }
+                                endif;
 
                                 ?>
                             </tbody>
@@ -236,7 +244,7 @@
             <div class="modal-header">
 
                 <h5 class="modal-title">
-                    <span class="fw-mediumbold">Edit</span>
+                    <span class="fw-mediumbold">Rubah</span>
                     <span class="fw-light">
                         <?= htmlspecialchars($h1) ?>
                     </span>

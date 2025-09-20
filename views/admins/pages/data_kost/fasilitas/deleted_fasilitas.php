@@ -173,7 +173,7 @@
             cancelButtonText: 'Batal'
         }).then((result) => {
             if (result.isConfirmed) {
-                window.location.href = 'settings/functions/delete/permanent/del_fasilitas?id=' + id;
+                window.location.href = 'settings/functions/delete/permanent/del_fasilitas?id_fasilitas=' + id;
             }
         })
     }

@@ -1,3 +1,14 @@
+<?php
+
+    $data_biodata = $mysqli->query("SELECT * FROM biodata JOIN user ON biodata.id_user = user.id_user");
+
+    $active_bio = [];
+    while ($bio = $data_biodata->fetch_assoc()) {
+        $active_bio[] = $bio;
+    }
+
+?>
+
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-12">
@@ -6,7 +17,7 @@
                 <div class="card-header">
                     <div class="d-flex align-items-center">
 
-                        <h4 class="card-title"><?= $h1;?></h4>
+                        <h4 class="card-title"><?= htmlspecialchars($h1);?></h4>
 
                     </div>
                 </div>
@@ -27,12 +38,19 @@
                             </thead>
 
                             <tbody>
-                                <?php
-                                    $no = 0;
-                                    $bio = $mysqli->query("SELECT * FROM biodata JOIN user ON biodata.id_user = user.id_user ORDER BY nama_user ASC");
-                                    while ($data = $bio->fetch_assoc()) {
-                                        $no++;
-                                ?>
+                                <?php if (empty($active_bio)) : ?>
+                                    <tr>
+                                        <td colspan="6" align="center">
+                                            <i>Tidak ada data biodata</i>
+                                        </td>
+                                    </tr>
+                                    <?php endif; ?>
+
+                                    <?php
+                                        $no = 0;
+                                        foreach ($active_bio as $data) {
+                                            $no++;
+                                    ?>
 
                                     <tr>
                                         <td align="center"><?= $no?></td>
@@ -46,7 +64,7 @@
                                         </td>
 
                                         <td align="center">
-                                            <button type="button" class="btn btn-secondary btn-link btn-lg" data-bs-toggle="modal" data-bs-target="#doc-<?= $data['id_user']?>">
+                                            <button type="button" class="btn btn-secondary btn-link btn-lg" data-bs-toggle="modal" data-bs-target="#document-<?= $data['id_biodata']?>">
                                                 <i class="fas fa-folder"></i>
                                             </button>
                                         </td>
@@ -76,20 +94,16 @@
     </div>
 </div>
 
-
 <!-- modal doc -->
-<?php
-    $bio = $mysqli->query("SELECT * FROM biodata JOIN user ON biodata.id_user = user.id_user");
-    while ($vd = mysqli_fetch_array($bio)) {
-    ?>
-    <div class="modal fade" id="doc-<?= $vd['id_user'] ?>" tabindex="-1" role="dialog" aria-hidden="true">
+<?php foreach ($active_bio as $data) : ?>
+    <div class="modal fade" id="document-<?= $data['id_biodata']?>" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
 
                 <div class="modal-header">
                     <h5 class="modal-title">
-                        <span class="fw-mediumbold">Document</span>
-                        <span class="fw-light"><?= $vd['nama_user']?></span>
+                        <span class="fw-mediumbold">Dokumen</span>
+                        <span class="fw-light"><?= $data['nama_user']?></span>
                     </h5>
                 </div>
 
@@ -106,18 +120,18 @@
                                     <i class="fas fa-phone"></i>
                                 </span>
 
-                                <input type="text" class="form-control" value="<?= $vd['no_hp'] ?>" readonly>
+                                <input type="text" class="form-control" value="<?= $data['no_hp'] ?>" readonly>
 
                             </div>
 
                         </div>
 
-                        <?php if (!empty($vd['scan_ktp'])) : ?>
+                        <?php if (!empty($data['scan_ktp'])) : ?>
                             <div class="col-md-6 pe-0">
                                 <div class="form-group">
 
                                     <label for="ktp">
-                                        KTP <?= $vd['nama_user']?>
+                                        KTP <?= $data['nama_user']?>
                                     </label>
 
                                     <div class="input-group">
@@ -126,10 +140,10 @@
                                             <i class="far fa-address-card"></i>
                                         </span>
 
-                                        <form action="/kost/assets/uploads/biodata/ktp/<?= $vd['scan_ktp']; ?>" method="get"
+                                        <form action="/kost/assets/uploads/biodata/ktp/<?= $data['scan_ktp']; ?>" method="get" target="_blank"
                                         >
                                             <button type="submit" class="btn">
-                                                KTP <?= $vd['nama_user']?>
+                                                Scan KTP
                                             </button>
                                         </form>
 
@@ -139,12 +153,12 @@
                             </div>
                         <?php endif; ?>
 
-                        <?php if (!empty($vd['scan_kk'])) : ?>
+                        <?php if (!empty($data['scan_kk'])) : ?>
                             <div class="col-md-6">
                                 <div class="form-group">
 
                                     <label for="kk">
-                                        KK <?= $vd['nama_user']?>
+                                        KK <?= $data['nama_user']?>
                                     </label>
 
                                     <div class="input-group">
@@ -153,10 +167,10 @@
                                             <i class="far fa-address-card"></i>
                                         </span>
 
-                                        <form action="/kost/assets/uploads/biodata/kk/<?= $vd['scan_kk']; ?>" method="get"
+                                        <form action="/kost/assets/uploads/biodata/kk/<?= $data['scan_kk']; ?>" method="get" target="_blank"
                                         >
                                             <button type="submit" class="btn">
-                                                KK <?= $vd['nama_user']?>
+                                                Scan KK
                                             </button>
                                         </form>
 
@@ -166,12 +180,12 @@
                             </div>
                         <?php endif; ?>
 
-                        <?php if (!empty($vd['bukti_nikah'])) : ?>
+                        <?php if (!empty($data['bukti_nikah'])) : ?>
                             <div class="col-sm-12">
                                 <div class="form-group">
 
                                     <label for="ktp">
-                                        Bukti Menikah <?= $vd['nama_user']?>
+                                        Bukti Menikah <?= $data['nama_user']?>
                                     </label>
 
                                     <div class="input-group">
@@ -180,10 +194,10 @@
                                             <i class="fas fa-book"></i>
                                         </span>
 
-                                        <form action="/kost/assets/uploads/biodata/bukti_nikah/<?= $vd['bukti_nikah']; ?>" method="get"
+                                        <form action="/kost/assets/uploads/biodata/bukti_nikah/<?= $data['bukti_nikah']; ?>" method="get"
                                         >
                                             <button type="submit" class="btn">
-                                                Bukti Menikah <?= $vd['nama_user']?>
+                                                Dokumen bukti pernikahan 
                                             </button>
                                         </form>
 
@@ -205,4 +219,4 @@
             </div>
         </div>
     </div>
-<?php }?>
+<?php endforeach; ?>

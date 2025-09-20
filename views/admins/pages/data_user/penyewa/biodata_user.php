@@ -543,7 +543,7 @@
 
                 <div class="modal-header">
                     <h5 class="modal-title">
-                        <span class="fw-mediumbold">Document</span>
+                        <span class="fw-mediumbold">Dokumen</span>
                         <span class="fw-light"><?= htmlspecialchars($data['nama_user']) ?></span>
                     </h5>
                 </div>
@@ -638,7 +638,7 @@
                                         <form action="/kost/assets/uploads/biodata/bukti_nikah/<?= htmlspecialchars($data['bukti_nikah']); ?>" target="_blank" method="get"
                                         >
                                             <button type="submit" class="btn">
-                                                Document bukti pernikahan
+                                                Dokumen bukti pernikahan
                                             </button>
                                         </form>
 

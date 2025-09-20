@@ -1,6 +1,6 @@
 <?php
 
-    $data_fasilitas = $mysqli->query("SELECT * FROM fasilitas ORDER BY id_fasilitas ASC");
+    $data_fasilitas = $mysqli->query("SELECT * FROM fasilitas ORDER BY kode_fasilitas ASC");
 
     $active_fasilitas = [];
     $has_deleted_fasilitas = false;

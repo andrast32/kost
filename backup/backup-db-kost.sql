@@ -34,14 +34,14 @@ CREATE TABLE `fasilitas` (
   `sl_fasilitas` text NOT NULL,
   `deleted` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id_fasilitas`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-INSERT INTO `fasilitas` VALUES("1","F1","meja belajar","Meja Belajar ukuran 1x1 dengan laci, dan tempat menyimpan pc","0.00","50","fasilitas_68c914340f7b60.50307478.jpg","d1381f4afee6ba395e3965a806371c86bd62d146ea7ec36e528e49be6bedaead","0");
-INSERT INTO `fasilitas` VALUES("2","F2","kursi","kursi plastik warna biru","0.00","50","fasilitas_68c9160d784374.73455761.jpg","623ce0fb3b03fc6ac5bc1ce5b95704843fd4719406cf9853426a377dd7e34302","0");
-INSERT INTO `fasilitas` VALUES("3","F3","lemari","lemari baju","30000.00","50","fasilitas_68c9145d515b31.45767087.jpeg","78e45a08a0f2be8ce5d2923b77e6481cbceff2b3faebf02a3e8f75d57ebfd2a9","0");
-INSERT INTO `fasilitas` VALUES("4","F4","kasur lantai","Kasur busa dengan ukuran 200cm x 80cm dengan ketebalan 10cm lengkap dengan bantal, guling dan selimut","25000.00","50","fasilitas_68c917d06b74c5.03747146.jpeg","b52df9ff029171da9a9705412d7b97962d9832fc2d2a60c9cd66997b67f7568a","0");
-INSERT INTO `fasilitas` VALUES("5","F5","wifi","wifi ","50000.00","50","fasilitas_68c914879ca700.02763864.png","e88e770ab4adb7d6e7408be0dbca7541ca0f8d902ef41b57e2decbb4dd72f450","0");
-INSERT INTO `fasilitas` VALUES("6","F6","parkir","Parkiran motor","0.00","999999","fasilitas_68c917bfc4f6d4.52128521.jpeg","4229dd6034da21237e78644d6ac1ecf786caaa0748239c80d1695035f8c770f2","0");
+INSERT INTO `fasilitas` VALUES("1","F1","meja belajar","Meja Belajar ukuran 1x1 dengan laci, dan tempat menyimpan pc","0.00","49","fasilitas_68c914340f7b60.50307478.jpg","d1381f4afee6ba395e3965a806371c86bd62d146ea7ec36e528e49be6bedaead","0");
+INSERT INTO `fasilitas` VALUES("3","F3","lemari","lemari baju","30000.00","49","fasilitas_68c9145d515b31.45767087.jpeg","78e45a08a0f2be8ce5d2923b77e6481cbceff2b3faebf02a3e8f75d57ebfd2a9","0");
+INSERT INTO `fasilitas` VALUES("4","F4","kasur lantai","Kasur busa dengan ukuran 200cm x 80cm dengan ketebalan 10cm lengkap dengan bantal, guling dan selimut","25000.00","48","fasilitas_68c917d06b74c5.03747146.jpeg","b52df9ff029171da9a9705412d7b97962d9832fc2d2a60c9cd66997b67f7568a","0");
+INSERT INTO `fasilitas` VALUES("5","F5","wifi","wifi ","50000.00","49","fasilitas_68c914879ca700.02763864.png","e88e770ab4adb7d6e7408be0dbca7541ca0f8d902ef41b57e2decbb4dd72f450","0");
+INSERT INTO `fasilitas` VALUES("7","F2","kursi","Kursi Plastik warna biru","0.00","49","fasilitas_68ce626d640f97.21488486.jpg","9a26f1c42b57a7b66fe51af6a84ed055fbe02006951fcae84b4063e6629cb8c9","0");
+INSERT INTO `fasilitas` VALUES("8","F6","parkir","parkiran basement","0.00","9998","fasilitas_68ce7189a23955.66455164.jpeg","04eb32f6a094551bbdbb932520d5c02508f9c24b4736c936b4ac53de52d86db3","0");
 
 
 DROP TABLE IF EXISTS `kamar`;
@@ -57,8 +57,8 @@ CREATE TABLE `kamar` (
   PRIMARY KEY (`id_kamar`)
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-INSERT INTO `kamar` VALUES("5","A1","kamar khusus perempuan berukuran 10x10, dilengkapi dengan listrik, kamar mandi dan dapur.","650000.00","Kosong","Perempuan","kamar_68ca8c190f4510.96824004.jpeg","70a127d9b3862c9f06fc407e5b27595b828226bca2a8133a1f01326c4acc2f1e");
-INSERT INTO `kamar` VALUES("6","A2","kamar khusus perempuan berukuran 10x10, dilengkapi dengan listrik, kamar mandi dan dapur.","650000.00","Kosong","Perempuan","kamar_68ca8c2e1efd06.96093767.jpeg","514ba0e5b1656184a71cc2c7d9cf3928eeaafc3456c3bbbaa0abcd335147e13f");
+INSERT INTO `kamar` VALUES("5","A1","kamar khusus perempuan berukuran 10x10, dilengkapi dengan listrik, kamar mandi dan dapur.","650000.00","Terisi","Perempuan","kamar_68ca8c190f4510.96824004.jpeg","70a127d9b3862c9f06fc407e5b27595b828226bca2a8133a1f01326c4acc2f1e");
+INSERT INTO `kamar` VALUES("6","A2","kamar khusus perempuan berukuran 10x10, dilengkapi dengan listrik, kamar mandi dan dapur.","650000.00","Terisi","Perempuan","kamar_68ca8c2e1efd06.96093767.jpeg","514ba0e5b1656184a71cc2c7d9cf3928eeaafc3456c3bbbaa0abcd335147e13f");
 INSERT INTO `kamar` VALUES("7","A3","kamar khusus perempuan berukuran 10x10, dilengkapi dengan listrik, kamar mandi dan dapur.","650000.00","Kosong","Perempuan","kamar_68ca8c461f3058.65151402.jpeg","e7923b4034cd4e24198fd40c0ecea8ab04eec06ee7ae98322a34336ef00d3ba3");
 INSERT INTO `kamar` VALUES("8","A4","kamar khusus perempuan berukuran 10x10, dilengkapi dengan listrik, kamar mandi dan dapur.","650000.00","Kosong","Perempuan","kamar_68ca8c55d445d1.83466076.jpeg","7a97f7ea9ea00c1acce51aed57d057ce18db3bb6e297006d543c092f30a404a6");
 
@@ -83,21 +83,44 @@ CREATE TABLE `pemesanan` (
   `id_pemesanan` bigint NOT NULL AUTO_INCREMENT,
   `id_user` bigint NOT NULL,
   `id_kamar` bigint DEFAULT NULL,
-  `id_fasilitas` bigint DEFAULT NULL,
   `tanggal_pesan` date NOT NULL,
   `tanggal_masuk` date DEFAULT NULL,
-  `durasi` int NOT NULL COMMENT 'Dalam bulan',
+  `tanggal_keluar` date DEFAULT NULL,
   `total` decimal(12,2) NOT NULL,
   `status` enum('Pending','Diterima','Ditolak') DEFAULT 'Pending',
   PRIMARY KEY (`id_pemesanan`),
   KEY `id_user` (`id_user`),
   KEY `id_kamar` (`id_kamar`),
-  KEY `id_fasilitas` (`id_fasilitas`),
   CONSTRAINT `pemesanan_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `user` (`id_user`),
-  CONSTRAINT `pemesanan_ibfk_2` FOREIGN KEY (`id_kamar`) REFERENCES `kamar` (`id_kamar`),
-  CONSTRAINT `pemesanan_ibfk_3` FOREIGN KEY (`id_fasilitas`) REFERENCES `fasilitas` (`id_fasilitas`) ON DELETE SET NULL ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  CONSTRAINT `pemesanan_ibfk_2` FOREIGN KEY (`id_kamar`) REFERENCES `kamar` (`id_kamar`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+INSERT INTO `pemesanan` VALUES("1","9","5","2025-09-25","2025-09-25","2025-10-25","675000.00","Diterima");
+INSERT INTO `pemesanan` VALUES("2","9","5","2025-09-25","2025-09-25","2025-10-25","675000.00","Diterima");
+INSERT INTO `pemesanan` VALUES("3","9","6","2025-09-25","2025-09-25","2025-10-25","755000.00","Diterima");
+
+
+DROP TABLE IF EXISTS `pemesanan_fasilitas`;
+CREATE TABLE `pemesanan_fasilitas` (
+  `id_detail` int NOT NULL AUTO_INCREMENT,
+  `id_pemesanan` bigint NOT NULL,
+  `id_fasilitas` bigint NOT NULL,
+  `jumlah` int NOT NULL DEFAULT '1',
+  `harga_saat_pesan` decimal(10,2) NOT NULL,
+  PRIMARY KEY (`id_detail`),
+  KEY `id_pemesanan` (`id_pemesanan`),
+  KEY `id_fasilitas` (`id_fasilitas`),
+  CONSTRAINT `pemesanan_fasilitas_ibfk_1` FOREIGN KEY (`id_pemesanan`) REFERENCES `pemesanan` (`id_pemesanan`) ON DELETE CASCADE,
+  CONSTRAINT `pemesanan_fasilitas_ibfk_2` FOREIGN KEY (`id_fasilitas`) REFERENCES `fasilitas` (`id_fasilitas`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+INSERT INTO `pemesanan_fasilitas` VALUES("1","2","4","1","25000.00");
+INSERT INTO `pemesanan_fasilitas` VALUES("2","3","1","1","0.00");
+INSERT INTO `pemesanan_fasilitas` VALUES("3","3","3","1","30000.00");
+INSERT INTO `pemesanan_fasilitas` VALUES("4","3","4","1","25000.00");
+INSERT INTO `pemesanan_fasilitas` VALUES("5","3","5","1","50000.00");
+INSERT INTO `pemesanan_fasilitas` VALUES("6","3","7","1","0.00");
+INSERT INTO `pemesanan_fasilitas` VALUES("7","3","8","1","0.00");
 
 
 DROP TABLE IF EXISTS `user`;
@@ -113,7 +136,7 @@ CREATE TABLE `user` (
   PRIMARY KEY (`id_user`)
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
-INSERT INTO `user` VALUES("1","andra@admin.com","$2y$10$IQANylhjmFDqKPmmGwUtkuA40w.n91iLCDnGoGYdJa9xfi4J1psae","Andra Setiawan","Admin","0","69fb9015712ca37a1a096454982bea32c693b4c903d5b93865c9cb8daf5f3d2a","3fb8b228d612d4ad9ec5ddbd1b5f76b19787d729b05fbea337df58df28f14046");
+INSERT INTO `user` VALUES("1","andra@admin.com","$2y$10$IQANylhjmFDqKPmmGwUtkuA40w.n91iLCDnGoGYdJa9xfi4J1psae","Andra Setiawan","Admin","0","571ed3f4572bc012997fe2b375b8a11422de4105102833b3e10bf26c9f6624ca","3fb8b228d612d4ad9ec5ddbd1b5f76b19787d729b05fbea337df58df28f14046");
 INSERT INTO `user` VALUES("2","antasena@admin.com","$2y$10$GoLDjlkH4lHkhmENbJdR2OZhc9uD429nNvhvCX8QIqXQnjHyq98Pu","Antasena putra","Admin","0","","5a0b1f9fbdbc3b15f51601d9a656256ba9974567f7c7ad513d73dc5e4884edbf");
 INSERT INTO `user` VALUES("3","viona@kost.com","$2y$10$AauCI.lrzTrfuLMb2vCgL.sPp9WZSZWyAAwTVUs/WQFz68.OjX2v2","Nathasya Viona","User","0","","f3888e7f8a3323e48d098351ddf98670209da7bcd6e2c3aa947a9a2d882fac2e");
 INSERT INTO `user` VALUES("4","indra@admin.com","$2y$10$POEkUANjULOZCOjlwyCP9uNyWwBcgBKAfhOZpNuqj2jWHxBYuR4Ry","Nurindra Setiawan","Admin","0","","2e640f53cd90e5ebe796cb6a715a6b94551af61f27b3f09696fca55ce5031c4c");

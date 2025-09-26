@@ -25,11 +25,11 @@
     }
 
     elseif (isset($_GET['pembayaran'])) {
-        include ("pages/data_pembayaran/".$_GET['pembayaran'].".php");
+        include ("pages/pembayaran/".$_GET['pembayaran'].".php");
     }
 
     elseif (isset($_GET['pemesanan'])) {
-        include ("pages/data_pemesanan/".$_GET['pemesanan'].".php");
+        include ("pages/pemesanan/".$_GET['pemesanan'].".php");
     }
 
     else {

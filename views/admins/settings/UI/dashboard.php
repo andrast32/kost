@@ -4,6 +4,11 @@
     $jumlah_kamar = $mysqli->query("SELECT COUNT(*) as total FROM kamar")->fetch_assoc()['total'];
     $jumlah_fasilitas = $mysqli->query("SELECT COUNT(*) as total FROM fasilitas")->fetch_assoc()['total'];
 
+    $total = $mysqli->query("SELECT SUM(jumlah_bayar) as total_uang FROM pembayaran WHERE status = 'Lunas'")->fetch_assoc()['total_uang'];
+    if ($total === null) {
+        $total = 0;
+    }
+
 ?>
 
 <div class="row">
@@ -76,7 +81,10 @@
                     <div class="col col-stats ms-3 ms-sm-0">
                         <div class="numbers">
                             <p class="card-category">Total uang</p>
-                            <h4 class="card-title">Rp. 1.000.000</h4>
+                            <h4 class="card-title">
+                                Rp.
+                                <?= number_format($total, 0, ',', '.') ?>
+                            </h4>
                         </div>
                     </div>
                 </div>

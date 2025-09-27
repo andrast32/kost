@@ -1,16 +1,29 @@
 <?php
 
+
+// Ambil pesan notifikasi dari session jika ada
 $alert = $_SESSION['alert'] ?? null;
 unset($_SESSION['alert']);
 
-// Ambil semua pemesanan yang statusnya 'Pending' untuk dibayar
+// Query untuk mengambil semua pemesanan yang statusnya 'Pending'
 $query_pending = "
-    SELECT p.id_pemesanan, p.total, u.nama_user, k.kode_kamar
-    FROM pemesanan p
-    JOIN user u ON p.id_user = u.id_user
-    JOIN kamar k ON p.id_kamar = k.id_kamar
-    WHERE p.status = 'Pending'
-    ORDER BY p.tanggal_pesan ASC
+    SELECT 
+        p.id_pemesanan, 
+        p.total, 
+        u.nama_user, 
+        k.kode_kamar
+    FROM 
+        pemesanan p
+    JOIN 
+        user u ON p.id_user = u.id_user
+    LEFT JOIN 
+        detail_pemesanan dp ON p.id_pemesanan = dp.id_pemesanan AND dp.tipe_item = 'kamar'
+    LEFT JOIN 
+        kamar k ON dp.id_item = k.id_kamar
+    WHERE 
+        p.status_kontrak = 'Pending'
+    ORDER BY 
+        p.tanggal_pesan ASC
 ";
 $data_pending = $mysqli->query($query_pending);
 ?>
@@ -31,7 +44,7 @@ $data_pending = $mysqli->query($query_pending);
             <h3><i class="fas fa-money-check-alt me-2"></i>Daftar Pembayaran Pending</h3>
         </div>
         <div class="card-body">
-            <table class="table table-hover">
+            <table class="table table-hover align-middle">
                 <thead>
                     <tr class="text-center">
                         <th>No. Pesanan</th>
@@ -42,12 +55,12 @@ $data_pending = $mysqli->query($query_pending);
                     </tr>
                 </thead>
                 <tbody>
-                    <?php if ($data_pending->num_rows > 0): ?>
+                    <?php if ($data_pending && $data_pending->num_rows > 0): ?>
                         <?php while($pesanan = $data_pending->fetch_assoc()): ?>
                             <tr class="text-center">
                                 <td><?= $pesanan['id_pemesanan'] ?></td>
                                 <td><?= htmlspecialchars($pesanan['nama_user']) ?></td>
-                                <td><?= htmlspecialchars($pesanan['kode_kamar']) ?></td>
+                                <td><?= htmlspecialchars($pesanan['kode_kamar'] ?? 'N/A') ?></td>
                                 <td>Rp <?= number_format($pesanan['total'], 0, ',', '.') ?></td>
                                 <td>
                                     <button class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#bayarModal" data-id="<?= $pesanan['id_pemesanan'] ?>" data-total="<?= $pesanan['total'] ?>">
@@ -58,7 +71,7 @@ $data_pending = $mysqli->query($query_pending);
                         <?php endwhile; ?>
                     <?php else: ?>
                         <tr>
-                            <td colspan="5" class="text-center text-muted">Tidak ada pembayaran yang pending.</td>
+                            <td colspan="5" class="text-center text-muted p-4">Tidak ada pembayaran yang pending saat ini.</td>
                         </tr>
                     <?php endif; ?>
                 </tbody>
@@ -77,7 +90,6 @@ $data_pending = $mysqli->query($query_pending);
             <form action="settings/functions/add/add_pembayaran" method="POST" enctype="multipart/form-data">
                 <div class="modal-body">
                     <input type="hidden" name="id_pemesanan" id="modal_id_pemesanan">
-                    
                     <div class="mb-3">
                         <label for="modal_jumlah_bayar" class="form-label">Jumlah Bayar</label>
                         <input type="number" class="form-control" id="modal_jumlah_bayar" name="jumlah_bayar" required>
@@ -103,28 +115,28 @@ $data_pending = $mysqli->query($query_pending);
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
-    // Script untuk mengisi data ke modal secara dinamis
-    const bayarModal = document.getElementById('bayarModal');
-    bayarModal.addEventListener('show.bs.modal', event => {
-        const button = event.relatedTarget;
-        const id_pemesanan = button.getAttribute('data-id');
-        const total = button.getAttribute('data-total');
+    document.addEventListener('DOMContentLoaded', function () {
+        const bayarModal = document.getElementById('bayarModal');
+        if (bayarModal) {
+            bayarModal.addEventListener('show.bs.modal', function (event) {
+                const button = event.relatedTarget;
+                const id_pemesanan = button.getAttribute('data-id');
+                const total = button.getAttribute('data-total');
+                const modalIdInput = bayarModal.querySelector('#modal_id_pemesanan');
+                const modalJumlahInput = bayarModal.querySelector('#modal_jumlah_bayar');
+                modalIdInput.value = id_pemesanan;
+                modalJumlahInput.value = total;
+            });
+        }
 
-        const modalIdInput = bayarModal.querySelector('#modal_id_pemesanan');
-        const modalJumlahInput = bayarModal.querySelector('#modal_jumlah_bayar');
-
-        modalIdInput.value = id_pemesanan;
-        modalJumlahInput.value = total;
+        <?php if ($alert): ?>
+        Swal.fire({
+            icon: '<?= $alert['icon'] ?>',
+            title: '<?= $alert['title'] ?>',
+            text: '<?= $alert['text'] ?>',
+        });
+        <?php endif; ?>
     });
-
-    // Script untuk menampilkan notifikasi dari session
-    <?php if ($alert): ?>
-    Swal.fire({
-        icon: '<?= $alert['icon'] ?>',
-        title: '<?= $alert['title'] ?>',
-        text: '<?= $alert['text'] ?>',
-    });
-    <?php endif; ?>
 </script>
 
 </body>

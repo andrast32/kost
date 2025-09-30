@@ -88,6 +88,7 @@
         <link rel="stylesheet" href="/kost/assets/UI/Admins/css/bootstrap.min.css">
         <link rel="stylesheet" href="/kost/assets/UI/Admins/css/plugins.min.css">
         <link rel="stylesheet" href="/kost/assets/UI/Admins/css/kaiadmin.min.css">
+        <link rel="stylesheet" href="/kost/assets/mod/style/modif.css">
 
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 

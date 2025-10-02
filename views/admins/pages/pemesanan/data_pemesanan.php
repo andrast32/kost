@@ -25,7 +25,7 @@
             WHERE 
                 status_kontrak 
 
-            IN ('Pending', 'Aktif')
+            IN ('Menunggu', 'Aktif')
         )
 
         ORDER BY nama_user ASC 
@@ -119,7 +119,7 @@
                                     <i class="fas fa-angle-double-left"></i> Kembali 
                                 </button>
                                 <form
-                                    action="settings/functions/add/add_pemesanan.php"
+                                    action="settings/functions/add/add_pemesanan"
                                     method="POST"
                                 >
                                     <input

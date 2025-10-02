@@ -1,76 +1,72 @@
 <?php
+// Diasumsikan koneksi dan sesi sudah ada dari file router Anda
+$alert = $_SESSION['alert'] ?? null;
+unset($_SESSION['alert']);
 
-    $query_pending = "
-        SELECT 
-            p.id_pemesanan, 
-            p.total, 
-            u.nama_user, 
-            k.kode_kamar
-        FROM 
-            pemesanan p
-        JOIN 
-            user u ON p.id_user = u.id_user
-        LEFT JOIN 
-            detail_pemesanan dp ON p.id_pemesanan = dp.id_pemesanan AND dp.tipe_item = 'kamar'
-        LEFT JOIN 
-            kamar k ON dp.id_item = k.id_kamar
-        WHERE 
-            p.status_kontrak = 'Pending'
-        ORDER BY 
-            p.tanggal_pesan ASC
-    ";
-    $data_pending = $mysqli->query($query_pending);
-
+// Mengambil semua PEMESANAN yang statusnya 'Pending' untuk dikonfirmasi
+$query_pending = $mysqli->query("
+    SELECT 
+        p.id_pemesanan, p.total, u.nama_user, p.tanggal_pesan,
+        k.kode_kamar
+    FROM pemesanan p
+    JOIN user u ON p.id_user = u.id_user
+    LEFT JOIN detail_pemesanan dp ON p.id_pemesanan = dp.id_pemesanan AND dp.tipe_item = 'kamar'
+    LEFT JOIN kamar k ON dp.id_item = k.id_kamar
+    WHERE p.status_kontrak = 'Menunggu'
+    ORDER BY p.tanggal_pesan ASC
+");
 ?>
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <title>Manajemen Pembayaran</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
-</head>
-<body>
 
-<div class="container my-5">
-    <div class="card shadow-sm">
-        <div class="card-header bg-warning">
-            <h3><i class="fas fa-money-check-alt me-2"></i>Daftar Pembayaran Pending</h3>
+<div class="container-fluid">
+    <div class="card">
+        <div class="card-header">
+            <h2 class="card-title"><i class="fas fa-calendar-check me-2"></i>Konfirmasi Pemesanan Tertunda</h2>
         </div>
         <div class="card-body">
-            <table class="table table-hover align-middle">
-                <thead>
-                    <tr class="text-center">
-                        <th>No. Pesanan</th>
-                        <th>Nama Penyewa</th>
-                        <th>Kamar</th>
-                        <th>Total Tagihan</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php if ($data_pending && $data_pending->num_rows > 0): ?>
-                        <?php while($pesanan = $data_pending->fetch_assoc()): ?>
+            
+            <?php if ($query_pending && $query_pending->num_rows > 0): ?>
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle">
+                        <thead>
                             <tr class="text-center">
-                                <td><?= $pesanan['id_pemesanan'] ?></td>
-                                <td><?= htmlspecialchars($pesanan['nama_user']) ?></td>
-                                <td><?= htmlspecialchars($pesanan['kode_kamar'] ?? 'N/A') ?></td>
-                                <td>Rp <?= number_format($pesanan['total'], 0, ',', '.') ?></td>
-                                <td>
-                                    <button class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#bayarModal" data-id="<?= $pesanan['id_pemesanan'] ?>" data-total="<?= $pesanan['total'] ?>">
-                                        <i class="fas fa-check me-1"></i> Proses Bayar
-                                    </button>
-                                </td>
+                                <th>ID Pesanan</th>
+                                <th>Nama Penyewa</th>
+                                <th>Kamar</th>
+                                <th>Tanggal Pesan</th>
+                                <th>Total Tagihan</th>
+                                <th style="width: 20%;">Aksi</th>
                             </tr>
-                        <?php endwhile; ?>
-                    <?php else: ?>
-                        <tr>
-                            <td colspan="5" class="text-center text-muted p-4">Tidak ada pembayaran yang pending saat ini.</td>
-                        </tr>
-                    <?php endif; ?>
-                </tbody>
-            </table>
+                        </thead>
+                        <tbody>
+                            <?php while($pesanan = $query_pending->fetch_assoc()): ?>
+                                <tr class="text-center">
+                                    <td>#<?= $pesanan['id_pemesanan'] ?></td>
+                                    <td><?= htmlspecialchars($pesanan['nama_user']) ?></td>
+                                    <td><?= htmlspecialchars($pesanan['kode_kamar'] ?? 'N/A') ?></td>
+                                    <td><?= date('d M Y', strtotime($pesanan['tanggal_pesan'])) ?></td>
+                                    <td class="fw-bold">Rp <?= number_format($pesanan['total'], 0, ',', '.') ?></td>
+                                    <td>
+                                        <button class="btn btn-sm btn-success" data-bs-toggle="modal" data-bs-target="#bayarModal" data-id="<?= $pesanan['id_pemesanan'] ?>" data-total="<?= $pesanan['total'] ?>">
+                                            <i class="fas fa-check"></i> Terima
+                                        </button>
+                                        <form action="settings/functions/proses_konfirmasi.php" method="POST" class="d-inline" onsubmit="return confirm('Anda yakin ingin menolak dan membatalkan pesanan ini?');">
+                                            <input type="hidden" name="id_pemesanan" value="<?= $pesanan['id_pemesanan'] ?>">
+                                            <button type="submit" name="action" value="tolak" class="btn btn-sm btn-danger">
+                                                <i class="fas fa-times"></i> Tolak
+                                            </button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            <?php endwhile; ?>
+                        </tbody>
+                    </table>
+                </div>
+            <?php else: ?>
+                <div class="text-center p-5">
+                    <h5 class="mt-3">Semua Pemesanan Sudah Terkonfirmasi!</h5>
+                    <p class="text-muted">Tidak ada pemesanan yang menunggu untuk dikonfirmasi saat ini.</p>
+                </div>
+            <?php endif; ?>
         </div>
     </div>
 </div>
@@ -79,15 +75,16 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="bayarModalLabel">Proses Pembayaran</h5>
+                <h5 class="modal-title" id="bayarModalLabel">Konfirmasi & Catat Pembayaran</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <form action="settings/functions/add/add_pembayaran" method="POST" enctype="multipart/form-data">
                 <div class="modal-body">
                     <input type="hidden" name="id_pemesanan" id="modal_id_pemesanan">
+                    <input type="hidden" name="action" value="terima">
                     <div class="mb-3">
-                        <label for="modal_jumlah_bayar" class="form-label">Jumlah Bayar</label>
-                        <input type="number" class="form-control" id="modal_jumlah_bayar" name="jumlah_bayar" required>
+                        <label for="modal_jumlah_bayar" class="form-label">Jumlah Bayar (Otomatis)</label>
+                        <input type="number" class="form-control" id="modal_jumlah_bayar" name="jumlah_bayar" readonly>
                     </div>
                     <div class="mb-3">
                         <label for="modal_tanggal_bayar" class="form-label">Tanggal Bayar</label>
@@ -100,15 +97,13 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                    <button type="submit" class="btn btn-primary">Simpan Pembayaran</button>
+                    <button type="submit" class="btn btn-primary">Konfirmasi & Simpan Pembayaran</button>
                 </div>
             </form>
         </div>
     </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         const bayarModal = document.getElementById('bayarModal');
@@ -117,10 +112,8 @@
                 const button = event.relatedTarget;
                 const id_pemesanan = button.getAttribute('data-id');
                 const total = button.getAttribute('data-total');
-                const modalIdInput = bayarModal.querySelector('#modal_id_pemesanan');
-                const modalJumlahInput = bayarModal.querySelector('#modal_jumlah_bayar');
-                modalIdInput.value = id_pemesanan;
-                modalJumlahInput.value = total;
+                bayarModal.querySelector('#modal_id_pemesanan').value = id_pemesanan;
+                bayarModal.querySelector('#modal_jumlah_bayar').value = total;
             });
         }
 
@@ -133,6 +126,3 @@
         <?php endif; ?>
     });
 </script>
-
-</body>
-</html>

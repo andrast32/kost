@@ -51,7 +51,7 @@
 
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table id="laporan" class="display table table-striped table-hoover">
+                        <table id="laporan" class="display table table-striped table-hover">
 
                             <thead>
                                 <tr align="center">

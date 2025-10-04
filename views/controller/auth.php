@@ -4,7 +4,6 @@ session_name('kost');
 session_start();
 include "connect.php";
 
-// Cek koneksi database
 if ($mysqli->connect_error) {
     die("Koneksi ke database gagal: " . $mysqli->connect_error);
 }

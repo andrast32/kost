@@ -122,6 +122,13 @@
 
 </script> -->
 
+<script>
+    $(document).ready(function() {
+        $('#tabelPembayaran').DataTable({
+            "order": [[ 5, "asc" ]]
+        });
+    });
+</script>
 
 </body>
 

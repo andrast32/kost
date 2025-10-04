@@ -80,13 +80,13 @@ Proyek **The Kost** hadir untuk mengatasi masalah ini dengan menyediakan **platf
 ```
 
 [ User ] ---< [ Biodata ]
-|
-+-----< [ Pemesanan ] ---< [ Detail_Pemesanan ]
-|            |
-|            +---< [ Pembayaran ]
-|
-[ Kamar ] <---> [ Detail_Pemesanan ]
-[ Fasilitas ] <---> [ Detail_Pemesanan ]
+   |
+   +-----< [ Pemesanan ] ---< [ Detail_Pemesanan ]
+                |
+                +-----------< [ Pembayaran ]
+
+[ Kamar ]     <- - - (Logika PHP) - - -> [ Detail_Pemesanan ]
+[ Fasilitas ] <- - - (Logika PHP) - - -> [ Detail_Pemesanan ]
 
 [ Pengaturan ] (Tabel utilitas)
 

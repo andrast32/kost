@@ -1,6 +1,6 @@
 <?php
 
-    $data_users = $mysqli->query("SELECT * FROM user WHERE role = 'User' ORDER BY id_user ASC");
+    $data_users = $mysqli->query("SELECT * FROM user WHERE role = 'User' AND deleted = 0 ORDER BY id_user ASC");
 
     $active_users = [];
     $has_deleted_users = false;

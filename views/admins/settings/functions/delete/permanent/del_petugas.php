@@ -5,14 +5,28 @@
     session_name('kost');
     session_start();
 
-    $id = $_GET['id'];
-    $mysqli->query("DELETE FROM user WHERE id_user = $id");
+    if (isset($_GET['id'])) {
+        $id = $_GET['id'];
+        $stmt = $mysqli->prepare("UPDATE user SET deleted = 2, session_token = NULL WHERE id_user = ?");
+        $stmt->bind_param("i", $id);
 
-    $_SESSION['alert'] = [
-        'icon' => 'success',
-        'title' => 'Dihapus!',
-        'text' => 'Data admin berhasil dihapus permanen.'
-    ];
+        if ($stmt->execute()) {
+            $_SESSION['alert'] = [
+                'icon' => 'success',
+                'title' => 'Terhapus!',
+                'text' => 'Data admin berhasil dihapus permanen!'
+            ];
+        } else {
+            $_SESSION['alert'] = [
+                'icon' => 'error',
+                'title' => 'Gagal!',
+                'text' => 'Data admin gagal dihapus!'
+            ];
+        }
+
+        $stmt->close();
+
+    }
 
     header("Location: ../../../../index?petugas=deleted_petugas");
     exit();

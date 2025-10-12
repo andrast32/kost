@@ -1,17 +1,12 @@
 <?php
 
-    $data_deleted_admins = $mysqli->query("SELECT * FROM user WHERE role = 'Admin' ORDER BY id_user ASC");
+    $data_deleted_admins = $mysqli->query(
+        "SELECT * FROM user 
+        WHERE role = 'Admin' AND deleted = 1 
+        ORDER BY id_user ASC
+    ");
 
-    $active_admin = [];
-    $has_deleted_users = true;
-
-    while ($admin = $data_deleted_admins->fetch_assoc()) {
-        if ($admin['deleted'] != 0) {
-            $active_admin[] = $admin;
-        } else {
-            $has_deleted_users = false;
-        }
-    }
+    $deleted_admins = $data_deleted_admins->fetch_all(MYSQLI_ASSOC);
 
 ?>
 
@@ -48,7 +43,7 @@
                             </thead>
 
                             <tbody>
-                                <?php if (empty($active_admin)) : ?>
+                                <?php if (empty($deleted_admins)) : ?>
                                     <tr>
                                         <td colspan="7" align="center">Tidak ada data petugas yang terhapus.</td>
                                     </tr>
@@ -57,7 +52,7 @@
                                     else :
 
                                         $no = 0;
-                                        foreach ($active_admin as $data) {
+                                        foreach ($deleted_admins as $data) {
                                             $no++;
                                             ?>
                                             <tr align="center">

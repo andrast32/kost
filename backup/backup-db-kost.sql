@@ -189,7 +189,7 @@ CREATE TABLE `pengaturan` (
   UNIQUE KEY `nama_pengaturan` (`nama_pengaturan`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-INSERT INTO `pengaturan` VALUES("1","terakhir_cek_checkout","2025-10-09 05:47:57");
+INSERT INTO `pengaturan` VALUES("1","terakhir_cek_checkout","2025-10-11 13:45:12");
 
 
 DROP TABLE IF EXISTS `user`;
@@ -205,7 +205,7 @@ CREATE TABLE `user` (
   PRIMARY KEY (`id_user`)
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
-INSERT INTO `user` VALUES("1","andra@admin.com","$2y$10$IQANylhjmFDqKPmmGwUtkuA40w.n91iLCDnGoGYdJa9xfi4J1psae","Andra Setiawan","Admin","0","9e36b22df51ec700549e92a621c16f09aa109b0c73ec60b7c830a95544eaa757","3fb8b228d612d4ad9ec5ddbd1b5f76b19787d729b05fbea337df58df28f14046");
+INSERT INTO `user` VALUES("1","andra@admin.com","$2y$10$IQANylhjmFDqKPmmGwUtkuA40w.n91iLCDnGoGYdJa9xfi4J1psae","Andra Setiawan","Admin","0","e229f5613f5c353ebe9ac290106833c1afda9ac793482dd3de9bcdca0744bfb2","3fb8b228d612d4ad9ec5ddbd1b5f76b19787d729b05fbea337df58df28f14046");
 INSERT INTO `user` VALUES("2","antasena@admin.com","$2y$10$GoLDjlkH4lHkhmENbJdR2OZhc9uD429nNvhvCX8QIqXQnjHyq98Pu","Antasena putra","Admin","0","","5a0b1f9fbdbc3b15f51601d9a656256ba9974567f7c7ad513d73dc5e4884edbf");
 INSERT INTO `user` VALUES("3","viona@kost.com","$2y$10$AauCI.lrzTrfuLMb2vCgL.sPp9WZSZWyAAwTVUs/WQFz68.OjX2v2","Nathasya Viona","User","0","","f3888e7f8a3323e48d098351ddf98670209da7bcd6e2c3aa947a9a2d882fac2e");
 INSERT INTO `user` VALUES("4","indra@admin.com","$2y$10$POEkUANjULOZCOjlwyCP9uNyWwBcgBKAfhOZpNuqj2jWHxBYuR4Ry","Nurindra Setiawan","Admin","2","","2e640f53cd90e5ebe796cb6a715a6b94551af61f27b3f09696fca55ce5031c4c");
